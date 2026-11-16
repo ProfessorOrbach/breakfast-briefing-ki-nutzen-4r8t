@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wie KI konkret Nutzen stiftet</title>
+<link rel="stylesheet" href="assets/deck.css?v=2">
+<style>
+:root { --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif; --ink:#1d1d1f; --ink-2:#424245; --muted:#86868b; --line:#d2d2d7; --hair:#e8e8ed; --acc:#C00009; }
+#stage, .slide { font-family: var(--font); }
+.slide { padding: 92px 128px 150px; --c: var(--acc); }
+.slide[data-chapter] { --c: var(--acc); }
+.kicker { font-size: 19px; font-weight: 500; letter-spacing: .02em; text-transform: none; color: var(--muted); gap: 0; }
+.kicker::before { display: none !important; content: none !important; }
+.slide h2 { font-size: 58px; font-weight: 600; letter-spacing: -.025em; line-height: 1.06; margin-top: 10px; }
+.slide h2 em, .slide h1 em { color: var(--acc); }
+.source { font-size: 15px; color: var(--muted); position: absolute; left: 128px; right: 128px; bottom: 128px; text-align: left; }
+#footer { bottom: 28px; height: 60px; }
+#logo, #logo-white { height: 60px; }
+#footer .meta { font-size: 16px; }
+#footer .meta b { font-weight: 600; }
+#progress .bar { height: 3px; border-radius: 0; } #progress .bar i { border-radius: 0; }
+#progress .seg .lbl { font-size: 13px; font-weight: 500; letter-spacing: .02em; text-transform: none; }
+#slideno { font-size: 16px; }
+.step { transform: none; }
+.rule { border-top: 1px solid var(--ink); }
+.num-xl { font-size: 128px; font-weight: 600; letter-spacing: -.045em; line-height: .95; font-variant-numeric: tabular-nums; }
+.num-l { font-size: 76px; font-weight: 600; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.lbl { font-size: 22px; line-height: 1.35; color: var(--ink-2); }
+.small { font-size: 17px; line-height: 1.4; color: var(--muted); }
+.acc { color: var(--acc); }
+
+/* Einstieg */
+.opener h1 { font-size: 132px; line-height: .98; font-weight: 600; letter-spacing: -.045em; max-width: 1500px; margin-top: 150px; }
+.opener .sub { font-size: 30px; line-height: 1.35; color: var(--ink-2); margin-top: 64px; max-width: 1100px; }
+.opener .who { position: absolute; left: 128px; bottom: 150px; font-size: 22px; line-height: 1.45; color: var(--ink-2); }
+.opener .who b { color: var(--ink); font-weight: 600; }
+
+/* ivwKöln */
+.ivw-img { position: absolute; left: 70px; top: 230px; width: 760px; }
+.ivw-head { position: absolute; left: 900px; right: 128px; top: 210px; }
+.ivw-head .t1 { font-size: 46px; font-weight: 600; letter-spacing: -.02em; }
+.ivw-head .t1 b { font-weight: 700; }
+.ivw-head .t2 { font-size: 38px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; margin-top: 6px; }
+.ivw-head .t3 { font-size: 32px; color: var(--ink-2); margin-top: 10px; }
+.ivw-grid { position: absolute; left: 900px; right: 128px; top: 470px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
+.ivw-grid .col h4 { margin: 0 0 6px; font-size: 18px; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+.ivw-grid .k { padding: 14px 0 12px; border-bottom: 1px solid var(--hair); }
+.ivw-grid .k .v { font-size: 44px; font-weight: 600; letter-spacing: -.03em; line-height: 1; }
+.ivw-grid .k .t { font-size: 17px; line-height: 1.3; color: var(--ink-2); margin-top: 6px; }
+
+/* NPS */
+.nps { position: absolute; left: 128px; right: 128px; top: 250px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; }
+.nps .co { border-top: 1px solid var(--ink); padding-top: 14px; }
+.nps .co h3 { font-size: 34px; font-weight: 600; letter-spacing: -.02em; }
+.nps .co .mt { font-size: 18px; color: var(--muted); margin-top: 4px; height: 48px; line-height: 1.3; }
+.nps .co svg { display: block; width: 100%; height: 230px; margin-top: 6px; }
+.nps .co .big { display: flex; align-items: baseline; gap: 16px; margin-top: 8px; }
+.nps .co .big .v { font-size: 64px; font-weight: 600; letter-spacing: -.04em; line-height: 1; }
+.nps .co .big .f { font-size: 26px; color: var(--muted); }
+.nps .co .ib { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--hair); font-size: 20px; line-height: 1.4; color: var(--ink-2); }
+.nps .co .ib b { color: var(--ink); font-weight: 600; font-size: 30px; letter-spacing: -.02em; }
+.punch { position: absolute; left: 128px; right: 128px; bottom: 170px; font-size: 32px; font-weight: 600; letter-spacing: -.015em; line-height: 1.25; }
+
+/* Nutzen */
+.nz { position: absolute; left: 128px; right: 128px; top: 300px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; column-gap: 40px; }
+.nz .h { font-size: 18px; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+.nz .h span { color: var(--muted); font-weight: 400; }
+.nz .it { padding: 16px 0 14px; border-bottom: 1px solid var(--hair); min-height: 128px; }
+.nz .it .c { font-size: 15px; font-weight: 600; color: var(--acc); letter-spacing: .02em; }
+.nz .it h3 { font-size: 27px; font-weight: 600; letter-spacing: -.015em; margin-top: 4px; line-height: 1.15; }
+.nz .it p { margin: 6px 0 0; font-size: 18px; line-height: 1.35; color: var(--ink-2); }
+.formula { position: absolute; left: 128px; right: 128px; top: 222px; font-size: 26px; color: var(--ink-2); }
+.formula b { color: var(--ink); font-weight: 600; }
+
+/* Beschwerden */
+.bw-l { position: absolute; left: 128px; width: 600px; top: 250px; }
+.bw-l .blk { border-top: 1px solid var(--ink); padding: 16px 0 26px; }
+.bw-l .blk .t { font-size: 21px; line-height: 1.35; color: var(--ink-2); margin-top: 8px; }
+.bw-r { position: absolute; left: 800px; right: 128px; top: 250px; }
+.bw-r table { width: 100%; border-collapse: collapse; }
+.bw-r th { text-align: left; font-size: 16px; font-weight: 600; color: var(--muted); padding: 0 16px 10px 0; border-bottom: 1px solid var(--ink); }
+.bw-r td { padding: 10px 16px 10px 0; border-bottom: 1px solid var(--hair); vertical-align: top; font-size: 19px; line-height: 1.3; color: var(--ink-2); }
+.bw-r td.c { font-weight: 600; color: var(--acc); width: 44px; }
+.bw-r td.n { font-weight: 600; color: var(--ink); font-size: 22px; width: 330px; }
+.bw-r td.d { white-space: nowrap; width: 90px; }
+
+/* Radar und Liste */
+.rl { position: absolute; inset: 0; }
+.rl .bg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transition: opacity .6s ease; }
+.rl.list .bg { opacity: 0; }
+.rl .d, .rl .no { position: absolute; left: var(--rx); top: var(--ry); transform: translate(-50%, -50%);
+  transition: left .9s cubic-bezier(.65,0,.35,1) calc(var(--i) * 22ms), top .9s cubic-bezier(.65,0,.35,1) calc(var(--i) * 22ms), color .4s; }
+.rl.list .d, .rl.list .no { left: var(--lx); top: var(--ly); }
+.rl .d { width: 16px; height: 16px; border-radius: 50%; background: var(--sc); z-index: 2; }
+.rl .no { font-size: 17px; font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.rl .ls { position: absolute; opacity: 0; transition: opacity .5s ease .7s; }
+.rl.list .ls { opacity: 1; }
+.rl.static .d, .rl.static .no, .rl.static .ls, .rl.static .bg { transition: none; }
+.rl .nm { font-size: 18px; color: var(--ink); white-space: nowrap; transform: translateY(-50%); }
+.rl .vl { font-size: 16px; color: var(--muted); transform: translateY(-50%); font-variant-numeric: tabular-nums; }
+.rl .rw { height: 1px; background: var(--hair); left: 128px; right: 128px; }
+.rl .thr { width: 0; border-left: 1px dashed var(--acc); }
+.rl .tk { font-size: 14px; color: var(--muted); transform: translateX(-50%); }
+.rl .sech { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: .02em; transform: translateY(-50%); }
+.rlc .cx { position: absolute; opacity: 0; transition: opacity .35s ease calc(var(--j) * 70ms); }
+.rlc.cols .cx { opacity: 1; }
+.rlc .ch { text-align: center; transform: translateX(-50%); }
+.rlc .ch b { display: block; font-size: 17px; font-weight: 600; }
+.rlc .ch span { display: block; font-size: 13px; line-height: 1.15; color: var(--ink-2); margin-top: 3px; }
+.rlc .gh { font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--ink); padding-bottom: 6px; }
+.rlc .m { width: 14px; height: 14px; border-radius: 50%; transform: translate(-50%, -50%); }
+.rlc .m.p { background: var(--ink); }
+.rlc .m.s { box-shadow: inset 0 0 0 2px #a1a1a6; }
+.rlc .sm { font-size: 18px; font-weight: 600; transform: translate(-50%, -50%); font-variant-numeric: tabular-nums; }
+.rlc .sml { font-size: 15px; font-weight: 600; transform: translateY(-50%); }
+.rside { position: absolute; left: 1120px; right: 128px; top: 250px; }
+.rside .st { border-top: 1px solid var(--ink); padding: 14px 0 22px; }
+.rside .sec { display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center; font-size: 20px; padding: 7px 0; border-bottom: 1px solid var(--hair); }
+.rside .sec i { width: 14px; height: 14px; border-radius: 50%; display: block; }
+.rside .sec span { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* Erkenntnis 1 */
+.k1 { position: absolute; left: 128px; right: 128px; top: 260px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; }
+.k1 > div { border-top: 1px solid var(--ink); padding-top: 14px; }
+.k1 .lbl { margin-top: 10px; }
+.k1t { position: absolute; left: 128px; right: 128px; top: 560px; }
+.k1t table { width: 100%; border-collapse: collapse; }
+.k1t th { text-align: left; font-size: 16px; font-weight: 600; color: var(--muted); padding: 0 20px 10px 0; border-bottom: 1px solid var(--ink); }
+.k1t td { padding: 12px 20px 12px 0; border-bottom: 1px solid var(--hair); font-size: 20px; line-height: 1.3; color: var(--ink-2); vertical-align: top; }
+.k1t td b { color: var(--ink); font-weight: 600; }
+.k1t td .cd { font-weight: 600; color: var(--acc); }
+
+/* Häufigkeit */
+.fq { position: absolute; left: 128px; width: 1040px; top: 250px; }
+.fq h4 { margin: 0; font-size: 18px; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+.fq .r { display: grid; grid-template-columns: 56px 230px 1fr 40px; align-items: center; height: 31px; border-bottom: 1px solid var(--hair); font-size: 18px; transition: opacity .5s; }
+.fq .r .c { font-weight: 600; color: var(--muted); }
+.fq .r .t { white-space: nowrap; }
+.fq .r .bar { display: flex; height: 14px; }
+.fq .r .bar i { display: block; width: 52px; height: 14px; margin-right: 4px; background: var(--ink); transition: background .5s; }
+.fq .r .bar i.s { background: none; box-shadow: inset 0 0 0 1.5px #a1a1a6; }
+.fq .r .n { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.fq.hlt .r:not(.on) { opacity: .3; }
+.fq.hlt .r.on .bar i:not(.s) { background: var(--acc); }
+.fq.hlt .r.on .c { color: var(--acc); }
+.fq .gap { height: 26px; }
+.fqs { position: absolute; left: 1260px; right: 128px; top: 250px; }
+.fqs .it { border-top: 1px solid var(--ink); padding: 14px 0 24px; }
+.fqs .it h3 { font-size: 30px; font-weight: 600; letter-spacing: -.02em; }
+.fqs .it p { margin: 8px 0 0; font-size: 20px; line-height: 1.38; color: var(--ink-2); }
+
+/* Ebenen */
+.eb { position: absolute; left: 128px; width: 560px; top: 250px; }
+.eb .e { border-top: 1px solid var(--ink); padding: 12px 0 18px; display: grid; grid-template-columns: 1fr auto; align-items: end; }
+.eb .e .t { font-size: 24px; font-weight: 600; }
+.eb .e .s { font-size: 17px; color: var(--muted); margin-top: 4px; }
+.eb .e .num-l { font-size: 68px; }
+.dp { position: absolute; left: 780px; right: 128px; top: 250px; }
+.dp .ax { position: relative; height: 34px; margin-left: 300px; border-bottom: 1px solid var(--ink); }
+.dp .ax span { position: absolute; bottom: 6px; transform: translateX(-50%); font-size: 15px; color: var(--muted); }
+.dp .r { position: relative; display: grid; grid-template-columns: 300px 1fr; align-items: center; height: 29px; border-bottom: 1px solid var(--hair); font-size: 17px; }
+.dp .r .t { white-space: nowrap; overflow: hidden; }
+.dp .r .t b { font-weight: 600; margin-right: 8px; }
+.dp .r .tr { position: relative; height: 100%; }
+.dp .r .tr i { position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%; background: var(--ink); transform: translate(-50%, -50%); }
+.dp .r.gap .tr i { background: var(--acc); }
+.dp .r.gap .t { color: var(--acc); }
+.dp .r .tr em { position: absolute; top: 50%; transform: translateY(-50%); font-style: normal; font-size: 15px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.dp .thr { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--acc); }
+.dp .grp { font-size: 15px; font-weight: 600; color: var(--muted); padding: 12px 0 4px; }
+
+/* Schluss */
+.close1 { font-size: 64px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; max-width: 1560px; margin-top: 70px; }
+.close1 span { display: block; }
+.close2 { font-size: 104px; font-weight: 600; letter-spacing: -.045em; line-height: 1; color: var(--acc); margin-top: 70px; max-width: 1500px; }
+.close3 { position: absolute; left: 128px; bottom: 150px; font-size: 22px; line-height: 1.5; color: var(--ink-2); }
+.close3 b { color: var(--ink); font-weight: 600; }
+
+/* Quellen */
+.lit { position: absolute; left: 128px; right: 128px; top: 230px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 48px; }
+.lit h3 { font-size: 18px; font-weight: 600; border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 10px; }
+.lit ul { list-style: none; margin: 0; padding: 0; }
+.lit li { font-size: 15.5px; line-height: 1.38; color: var(--ink-2); margin-bottom: 9px; }
+
+/* Fassung C2 */
+.opener h1 { font-size: 150px; }
+.opener .sub { max-width: 1664px; font-size: 54px; font-weight: 600; letter-spacing: -.025em; color: var(--muted); margin-top: 48px; }
+.ivw-grid.big { top: 500px; }
+.ivw-grid.big .k { padding: 20px 0 22px; }
+.ivw-grid.big .k .v { font-size: 76px; letter-spacing: -.04em; }
+.ivw-grid.big .k .t { font-size: 22px; margin-top: 10px; }
+.np-l { position: absolute; left: 128px; width: 800px; top: 250px; }
+.np-l svg { width: 760px; height: 440px; display: block; margin-top: 10px; }
+.np-l .h, .np-r .h, .cg-l .h, .hp-l .h, .hp-r .h, .wz .h { font-size: 18px; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+.np-l .src, .np-r .src { font-size: 15px; color: var(--muted); margin-top: 10px; }
+.np-r { position: absolute; left: 1020px; right: 128px; top: 250px; }
+.np-r .ib { display: grid; grid-template-columns: 210px 1fr; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--hair); }
+.np-r .rk { display: flex; align-items: baseline; gap: 12px; }
+.np-r .rk .no { font-size: 88px; font-weight: 600; letter-spacing: -.045em; line-height: 1; }
+.np-r .rk .dl { font-size: 22px; font-weight: 600; color: var(--acc); }
+.np-r .co { font-size: 34px; font-weight: 600; letter-spacing: -.02em; }
+.np-r .tx { font-size: 19px; color: var(--ink-2); margin-top: 6px; line-height: 1.35; }
+.punch { bottom: 170px; font-size: 44px; letter-spacing: -.02em; }
+.punch em { font-style: normal; color: var(--acc); }
+.steps3 { position: absolute; left: 128px; right: 128px; top: 330px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; }
+.steps3 > div { border-top: 1px solid var(--ink); padding-top: 20px; }
+.steps3 .n { font-size: 200px; font-weight: 600; letter-spacing: -.06em; line-height: .85; color: var(--acc); }
+.steps3 h3 { font-size: 40px; font-weight: 600; letter-spacing: -.02em; margin-top: 30px; line-height: 1.1; }
+.steps3 p { font-size: 23px; line-height: 1.4; color: var(--ink-2); margin: 14px 0 0; }
+.radar-img { position: absolute; left: 40px; top: 205px; width: 1000px; height: 774px; }
+.rleg { position: absolute; left: 1060px; right: 110px; top: 226px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 30px; align-content: start; }
+.rleg .rst { grid-column: span 2; margin-bottom: 6px; }
+.rst { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--ink); padding: 8px 0 12px; }
+.rst > div { display: flex; align-items: baseline; gap: 12px; }
+.rst .num-l { font-size: 52px; } .rst .lbl { font-size: 17px; }
+.rsec { margin-top: 8px; }
+.rsh { font-size: 15px; font-weight: 600; padding: 4px 0 3px; border-bottom: 1px solid var(--hair); }
+.rd { display: grid; grid-template-columns: 30px 1fr 40px; align-items: center; height: 24px; font-size: 16.5px; }
+.rd .rn { width: 22px; height: 22px; border-radius: 50%; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.rd .rv { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+.nz2 { position: absolute; left: 128px; right: 128px; top: 296px; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; column-gap: 40px; }
+.nz2 .lv { border-top: 4px solid var(--lc); }
+.nz2 .lh { padding: 12px 0 10px; }
+.nz2 .lh b { display: block; font-size: 20px; font-weight: 600; color: var(--lc); }
+.nz2 .lh span { display: block; font-size: 30px; font-weight: 600; letter-spacing: -.02em; margin-top: 2px; }
+.nz2 .two { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; }
+.nz2 .it { display: grid; grid-template-columns: 62px 1fr; padding: 13px 0 12px; border-top: 1px solid var(--hair); }
+.nz2 .it .c { font-size: 20px; font-weight: 600; color: var(--lc); padding-top: 3px; }
+.nz2 .it h3 { font-size: 25px; font-weight: 600; letter-spacing: -.015em; line-height: 1.15; }
+.nz2 .it p { margin: 5px 0 0; font-size: 17px; line-height: 1.35; color: var(--muted); font-style: italic; }
+.nz2 .lvn { font-size: 19px; line-height: 1.45; color: var(--ink-2); margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--ink); }
+.agg { position: absolute; left: 128px; right: 128px; top: 250px; display: grid; align-items: center; }
+.agg .gh { font-size: 15px; font-weight: 600; border-bottom: 1px solid var(--ink); padding-bottom: 6px; margin: 0 4px; }
+.agg .hh { font-size: 15px; font-weight: 600; color: var(--muted); align-self: end; padding-bottom: 8px; }
+.agg .ch { text-align: center; padding: 10px 0 10px; align-self: end; }
+.agg .ch b { display: block; font-size: 17px; font-weight: 600; }
+.agg .ch span { display: block; font-size: 12.5px; line-height: 1.15; color: var(--ink-2); margin-top: 3px; }
+.agg .sn { font-size: 23px; font-weight: 600; letter-spacing: -.01em; height: 96px; display: flex; flex-direction: column; justify-content: center; border-top: 1px solid var(--hair); padding-left: 26px; position: relative; }
+.agg .sn i { position: absolute; left: 0; top: 50%; width: 14px; height: 14px; border-radius: 50%; transform: translateY(-50%); }
+.agg .sn small { font-size: 15px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+.agg .sv { font-size: 30px; font-weight: 600; text-align: right; padding-right: 14px; height: 96px; line-height: 96px; border-top: 1px solid var(--hair); font-variant-numeric: tabular-nums; }
+.agg .ac { height: 96px; display: flex; align-items: center; justify-content: center; border-top: 1px solid var(--hair); }
+.agg .sep { height: 96px; }
+.agg .bub { border-radius: 50%; background: var(--ink); color: #fff; font-size: 17px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+.agg .rg { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 2px #a1a1a6; }
+.kf { position: absolute; left: 128px; right: 128px; top: 262px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; }
+.kf > div { border-top: 1px solid var(--ink); padding-top: 14px; }
+.kf .l { font-size: 72px; font-weight: 300; line-height: 1; color: var(--muted); }
+.kf h3 { font-size: 36px; font-weight: 600; letter-spacing: -.02em; margin-top: 10px; line-height: 1.1; min-height: 80px; }
+.kf .kn, .wz .kn { display: grid; grid-template-columns: 150px 1fr; align-items: center; column-gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+.kf .kn span:last-child, .wz .kn span:last-child { font-size: 19px; line-height: 1.35; color: var(--ink-2); }
+.kf .kn .num-l { font-size: 64px; }
+.kf p { font-size: 19px; color: var(--muted); margin: 14px 0 0; line-height: 1.4; }
+.kf .gap .l, .kf .gap h3, .kf .gap .num-l { color: var(--acc); }
+.cg-l { position: absolute; left: 128px; width: 940px; top: 262px; }
+.loop { display: flex; align-items: center; gap: 14px; margin-top: 22px; }
+.loop > div { flex: 1; font-size: 28px; font-weight: 600; letter-spacing: -.015em; }
+.loop > div span { display: block; font-size: 16px; font-weight: 600; color: var(--acc); margin-bottom: 4px; }
+.loop i { font-style: normal; font-size: 30px; color: var(--muted); }
+.uc6 { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
+.uc6 div { font-size: 25px; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+.cg-r { position: absolute; left: 1180px; right: 128px; top: 262px; }
+.cg-r .m { border-top: 1px solid var(--ink); padding: 12px 0 22px; }
+.cg-r .num-xl { font-size: 104px; }
+.cg-r .lbl { margin-top: 6px; }
+.hp-l { position: absolute; left: 128px; width: 900px; top: 262px; }
+.hs { display: grid; grid-template-columns: 56px 190px 1fr; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--hair); }
+.hs .n { font-size: 34px; font-weight: 600; color: var(--acc); }
+.hs b { font-size: 30px; font-weight: 600; letter-spacing: -.015em; }
+.hs .t { font-size: 22px; color: var(--ink-2); line-height: 1.35; }
+.hp-r { position: absolute; left: 1120px; right: 128px; top: 262px; }
+.hp-r .bb { font-size: 21px; line-height: 1.4; color: var(--ink-2); padding: 14px 0; border-bottom: 1px solid var(--hair); }
+.hp-r .bb b { color: var(--ink); font-weight: 600; }
+.hp-r .pre { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; margin-top: 12px; }
+.hp-r .pre b { display: block; font-size: 34px; font-weight: 600; letter-spacing: -.02em; color: var(--acc); }
+.hp-r .pre span { display: block; font-size: 19px; line-height: 1.35; color: var(--ink-2); margin-top: 6px; }
+.wz { position: absolute; left: 128px; right: 128px; top: 262px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; }
+.wz h3 { font-size: 30px; font-weight: 600; letter-spacing: -.015em; margin-top: 18px; line-height: 1.15; }
+.wz p { font-size: 21px; line-height: 1.42; color: var(--ink-2); margin: 12px 0 0; }
+.wz ul { margin: 14px 0 0; padding-left: 24px; font-size: 21px; line-height: 1.55; color: var(--ink-2); }
+.wz .kn { grid-template-columns: 250px 1fr; }
+.wz .kn .num-l { font-size: 58px; }
+.wz .kn .num-xl { font-size: 110px; white-space: nowrap; }
+.wz .kn.big { grid-template-columns: 330px 1fr; }
+.wz .q { font-size: 28px; font-weight: 600; color: var(--ink); letter-spacing: -.015em; margin-top: 26px; line-height: 1.25; }
+.tl3 { position: absolute; left: 128px; right: 128px; top: 250px; display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 56px; }
+.tl3 .ln { position: absolute; left: 0; right: 0; top: 74px; height: 2px; background: linear-gradient(90deg, #d2d2d7, var(--acc)); }
+.tl3 .p { position: relative; }
+.tl3 .y { font-size: 52px; font-weight: 600; letter-spacing: -.03em; height: 74px; }
+.tl3 .p::before { content: ""; position: absolute; left: 0; top: 66px; width: 18px; height: 18px; border-radius: 50%; background: var(--acc); }
+.tl3 h3 { font-size: 34px; font-weight: 600; margin-top: 34px; letter-spacing: -.02em; }
+.tl3 p { font-size: 21px; line-height: 1.4; color: var(--ink-2); margin: 8px 0 0; }
+.reco { position: absolute; left: 128px; right: 128px; top: 560px; font-size: 38px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; margin: 0; }
+.reco em { font-style: normal; color: var(--acc); }
+.slide .close2 { position: absolute; left: 128px; right: 128px; top: 700px; margin: 0; font-size: 84px; color: var(--ink); }
+.ivw-head2 { position: absolute; left: 128px; right: 128px; top: 150px; }
+.ivw-head2 .t1 { font-size: 68px; font-weight: 600; letter-spacing: -.02em; } .ivw-head2 .t1 b { font-weight: 700; }
+.ivw-head2 .t2 { font-size: 50px; font-weight: 600; letter-spacing: -.025em; line-height: 1.1; margin-top: 8px; }
+.ivw-head2 .t3 { font-size: 34px; color: var(--ink-2); margin-top: 14px; }
+.ivw-img2 { position: absolute; left: 110px; top: 440px; width: 640px; }
+.ivw3 { position: absolute; left: 1000px; right: 128px; top: 430px; }
+.ivw3 .r { border-top: 1px solid var(--ink); padding: 12px 0 22px; }
+.ivw3 h4 { margin: 0; font-size: 20px; font-weight: 600; }
+.ivw3 .v { font-size: 68px; font-weight: 600; letter-spacing: -.045em; line-height: 1; margin-top: 8px; }
+.ivw3 .t { font-size: 21px; line-height: 1.3; color: var(--ink-2); margin-top: 6px; }
+.slide h2 .h2s { display: block; font-size: 34px; font-weight: 500; color: var(--muted); letter-spacing: -.01em; margin-top: 14px; }
+.rl .d { width: 32px; height: 32px; box-shadow: 0 0 0 2px #fff; transition: left .9s cubic-bezier(.65,0,.35,1) calc(var(--i) * 22ms), top .9s cubic-bezier(.65,0,.35,1) calc(var(--i) * 22ms), width .6s, height .6s; }
+.rl.list .d { width: 16px; height: 16px; box-shadow: none; }
+.rl .no { z-index: 3; color: #fff; font-size: 14px; font-weight: 700; }
+.rl.list .no { color: var(--ink-2); font-size: 17px; font-weight: 600; }
+.rl .no { transition: left .9s cubic-bezier(.65,0,.35,1) calc(var(--i) * 22ms), top .9s cubic-bezier(.65,0,.35,1) calc(var(--i) * 22ms), color .4s, font-size .6s; }
+.zhl { position: absolute; z-index: 0; background: rgba(192,0,9,.08); box-shadow: inset 0 0 0 2px var(--acc); opacity: 0; transition: opacity .5s; pointer-events: none; }
+.zhl.on { opacity: 1; }
+.rl.static .d, .rl.static .no { transition: none; }
+.kb-img { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; object-fit: cover; object-position: center top; }
+.kb { position: absolute; left: 128px; width: 640px; top: 92px; }
+.kb h2 { font-size: 62px; }
+.kb-l { font-size: 28px; color: var(--ink-2); margin: 40px 0 10px; }
+.kb-r { display: grid; grid-template-columns: 96px 1fr; align-items: baseline; padding: 16px 0; border-top: 1px solid rgba(0,0,0,.18); }
+.kb-r .pp { font-size: 52px; font-weight: 700; color: var(--acc); letter-spacing: -.02em; line-height: 1; }
+.kb-r .tt { font-size: 38px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+.kb-r .tt small { display: block; font-size: 17px; font-weight: 400; color: var(--ink-2); letter-spacing: 0; margin-top: 6px; }
+.tiles { position: absolute; left: 128px; right: 128px; top: 270px; bottom: 190px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; }
+.tile { background: #f5f5f7; border-radius: 22px; padding: 30px 34px; position: relative; }
+.tile .tn { font-size: 20px; font-weight: 700; color: #fff; background: var(--acc); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.tile h3 { font-size: 31px; font-weight: 600; letter-spacing: -.02em; line-height: 1.12; margin-top: 16px; }
+.ucr { display: grid; grid-template-columns: 38px 1fr auto; align-items: center; padding: 11px 0; border-bottom: 1px solid #e0e0e5; font-size: 22px; }
+.ucr:first-of-type { margin-top: 14px; }
+.ucr .rn { width: 26px; height: 26px; border-radius: 50%; color: #fff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.ucr .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+.tile .tf { font-size: 15px; color: var(--muted); margin: 14px 0 0; }
+.cflow { margin-top: 18px; }
+.cfs { display: grid; grid-template-columns: 130px 1fr; align-items: center; background: #fff; border-radius: 14px; padding: 13px 18px; }
+.cfs b { font-size: 27px; font-weight: 600; letter-spacing: -.015em; }
+.cfs span { font-size: 17px; line-height: 1.3; color: var(--ink-2); }
+.cfa { height: 22px; width: 2px; background: var(--acc); margin-left: 46px; position: relative; }
+.cfa::after { content: ""; position: absolute; left: -5px; bottom: -2px; border: 6px solid transparent; border-top: 7px solid var(--acc); border-bottom: 0; }
+.ud { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+.ud > div { background: #fff; border-radius: 14px; padding: 12px 14px; display: flex; align-items: center; gap: 12px; }
+.ud i { font-style: normal; font-size: 36px; font-weight: 700; line-height: 1; }
+.ud .up i { color: #1a7f37; } .ud .dn i { color: var(--acc); }
+.ud span { font-size: 15px; color: var(--muted); font-weight: 600; } .ud span b { display: block; font-size: 19px; color: var(--ink); line-height: 1.2; }
+.kpi { margin-top: 18px; }
+.kpi > div { display: grid; grid-template-columns: 130px 1fr; align-items: baseline; padding: 9px 0; border-top: 1px solid #e0e0e5; }
+.kpi b { font-size: 38px; font-weight: 600; letter-spacing: -.03em; }
+.kpi span { font-size: 17px; color: var(--ink-2); line-height: 1.3; }
+.tiles.ind { top: 320px; }
+.tile .tq { font-size: 21px; color: var(--ink-2); margin: 8px 0 0; line-height: 1.35; }
+.tile .rf { display: grid; grid-template-columns: 120px 1fr; align-items: center; column-gap: 12px; margin-top: 22px; padding: 14px 0; border-top: 1px solid #e0e0e5; border-bottom: 1px solid #e0e0e5; }
+.tile .rf .num-l { font-size: 60px; color: var(--acc); }
+.tile .rf span:last-child { font-size: 16px; line-height: 1.35; color: var(--ink-2); }
+.tile .ex { font-size: 20px; line-height: 1.42; color: var(--ink-2); margin: 18px 0 0; }
+.tile .ex b { color: var(--ink); font-weight: 600; }
+.um { position: absolute; left: 128px; right: 128px; top: 262px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 80px; }
+.uh { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 600; letter-spacing: -.02em; padding-bottom: 16px; border-bottom: 1px solid var(--ink); }
+.uh span { width: 46px; height: 46px; border-radius: 50%; background: var(--acc); color: #fff; font-size: 24px; display: flex; align-items: center; justify-content: center; flex: none; }
+.ly { display: grid; grid-template-columns: 170px 1fr; align-items: center; margin-top: 20px; background: #f5f5f7; border-radius: 18px; padding: 30px 30px; }
+.ly b { font-size: 46px; font-weight: 600; letter-spacing: -.03em; }
+.ly span { font-size: 22px; line-height: 1.35; color: var(--ink-2); }
+.venn svg { display: block; width: 620px; height: 531px; margin: 6px auto 0; }
+.wk { position: absolute; left: 128px; right: 128px; top: 300px; display: grid; grid-template-columns: auto 1fr auto 1fr auto 1fr auto; align-items: start; }
+.wn { width: 330px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.wn .c { border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 600; letter-spacing: -.02em; line-height: 1.12; }
+.wn .c b { font-weight: 700; }
+.wn .c1 { width: 250px; height: 250px; margin-top: 45px; background: #f5f5f7; font-size: 32px; }
+.wn .c2 { width: 290px; height: 290px; margin-top: 25px; box-shadow: inset 0 0 0 3px var(--ink); font-size: 31px; gap: 10px; }
+.wn .c2 b { color: var(--acc); }
+.wn .c3 { width: 300px; height: 300px; margin-top: 20px; background: var(--ink); color: #fff; font-size: 64px; }
+.wn .c4 { width: 340px; height: 340px; background: var(--acc); color: #fff; font-size: 40px; }
+.wn p { font-size: 21px; line-height: 1.35; color: var(--ink-2); margin: 24px 0 0; max-width: 300px; }
+.wa { height: 2px; background: var(--line); margin: 170px 10px 0; position: relative; }
+.wa::after { content: ""; position: absolute; right: -2px; top: -7px; border: 8px solid transparent; border-left: 12px solid var(--line); border-right: 0; }
+.rb .rbs { position: absolute; left: 40px; top: 205px; width: 1000px; height: 774px; }
+.rb .L1, .rb .L2, .rb .L3, .rb .L4 { opacity: 0; transition: opacity .6s ease; }
+.rb:has(.m1.on) .L1, .rb:has(.m2.on) .L2, .rb:has(.m3.on) .L3, .rb:has(.m4.on) .L4 { opacity: 1; }
+.rb:has(.m4.on) .L2a, .rb:has(.m2.on) .Lp0, .rb:has(.m4.on) .rxe { opacity: 0; }
+.rb .Lp0, .rb .rxe { transition: opacity .5s ease; }
+.rb .L0 { transition: opacity .6s ease; } .rb:has(.m1.on) .L0 { opacity: 0; }
+.rb .mk { display: none; }
+.rx0 { position: absolute; left: 1100px; right: 128px; top: 300px; }
+.rx0 .h { font-size: 20px; font-weight: 600; padding-bottom: 10px; border-bottom: 1px solid var(--ink); }
+.rx0 p { font-size: 26px; line-height: 1.35; color: var(--ink-2); margin: 22px 0 0; }
+.rx0 p b { color: var(--ink); font-weight: 600; }
+.rxe .ri { display: grid; grid-template-columns: 52px 1fr; align-items: start; padding: 16px 0; border-bottom: 1px solid var(--hair); }
+.rxe .bd { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.rxe .ri span:last-child { font-size: 23px; line-height: 1.3; color: var(--ink-2); }
+.rxe .ri b { color: var(--ink); font-weight: 600; }
+.rxe .ri em { display: block; font-style: normal; font-size: 40px; font-weight: 600; letter-spacing: -.03em; color: var(--ink); margin-top: 4px; }
+.rxe p.rv { font-size: 19px; margin-top: 18px; }
+.rxe p.L3 { font-size: 21px; }
+.wink { position: absolute; left: 128px; right: 128px; top: 560px; }
+.wink .wl { font-size: 24px; font-weight: 500; color: var(--muted); }
+.wink .wc { display: flex; align-items: center; gap: 18px; margin-top: 14px; flex-wrap: nowrap; }
+.wink .wc span { font-size: 30px; font-weight: 600; letter-spacing: -.02em; background: #f5f5f7; border-radius: 999px; padding: 12px 24px; white-space: nowrap; }
+.wink .wc span.k { background: var(--acc); color: #fff; }
+.wink .wc i { font-style: normal; font-size: 30px; color: var(--muted); }
+.slide .close2 { top: 730px; font-size: 72px; color: var(--ink); max-width: none; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- Icon-Sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4M8 16h.01M16 16h.01"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></symbol>
+    <symbol id="i-chevron-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-chevron-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+  </defs>
+</svg>
+
+<div id="stage">
+
+<section class="slide opener" data-chapter="1" data-nochrome data-title="Titel: Wie KI konkret Nutzen stiftet">
+  <div class="kicker">Versicherungsmonitor · Breakfast Briefing · Praxisbericht I</div>
+  <h1>Wie KI konkret <em>Nutzen</em> stiftet</h1>
+  <p class="sub">Haben Sie ein Kunden-werben-Kunden-Programm?</p>
+  <div class="who"><b>Prof. Dr. Dominik Orbach</b><br>ivwKöln · Institut für Versicherungswesen der TH Köln</div>
+  <aside class="notes"><p><b>0:00–1:00.</b> Begrüßung. Dann die Frage aus dem Untertitel ins Publikum: „Haben Sie ein Kunden-werben-Kunden-Programm? Hand hoch, wer eines hat.“ – kurz zählen. „Und wer weiß, wie viele Neukunden darüber kommen?“</p><p>Kunden-werben-Kunden funktioniert nur, wenn Kunden etwas erlebt haben, das sie weitererzählen wollen. Darum geht es heute: Wo stiftet KI so viel Nutzen, dass Kunden uns weiterempfehlen?</p></aside>
+</section>
+
+<section class="slide" data-chapter="1" data-title="Das ivwKöln">
+  <div class="kicker">Woher ich komme</div>
+  <div class="ivw-head2">
+    <div class="t1"><b>ivw</b>Köln</div>
+    <div class="t2">Das Hochschulinstitut für Versicherung und Risikomanagement</div>
+    <div class="t3">Wir verzahnen Lehre, Forschung und Praxis.</div>
+  </div>
+  <img class="ivw-img2" src="assets/img/ivw-lehre-forschung-praxis.png" alt="Lehre, Forschung und Praxis als ineinandergreifende Kreise">
+  <div class="ivw3">
+    <div class="r"><h4 style="color:#C00009">Lehre</h4><div class="v">1.000</div><div class="t">Studierende</div></div>
+    <div class="r"><h4 style="color:#9D167A">Forschung</h4><div class="v">16 + 6</div><div class="t">Professorinnen und Professoren + Doktorandinnen und Doktoranden</div></div>
+    <div class="r"><h4 style="color:#E24300">Praxis</h4><div class="v">170</div><div class="t">Unternehmen im Förderverein</div></div>
+  </div>
+  <aside class="notes"><p><b>1:00–2:00.</b> Kurz, woher ich komme: das ivwKöln, das Hochschulinstitut für Versicherung und Risikomanagement der TH Köln. Wir verzahnen Lehre, Forschung und Praxis.</p><p>Lehre: rund 1.000 Studierende. Forschung: 16 Professorinnen und Professoren und sechs Doktorandinnen und Doktoranden. Praxis: 170 Unternehmen im Förderverein.</p><p>Ich selbst war 14 Jahre in der Praxis, bei der AXA und der SIGNAL IDUNA. Das KI-Radar, das ich gleich zeige, ist ein Projekt aus genau dieser Verzahnung.</p></aside>
+</section>
+
+<section class="slide" data-chapter="2" data-title="Vorgehen in drei Schritten">
+  <div class="kicker">Vorgehen</div>
+  <h2>Welche KI-Innovationen bringen welchen <em>Kundennutzen</em>?<span class="h2s">Vorgehen in drei Schritten</span></h2>
+  <div class="steps3">
+    <div><div class="n">1</div><h3>Use Cases systematisieren</h3><p>KI-Implementierungsradar: 23 Dimensionen entlang der Wertschöpfung, 41 dokumentierte Use Cases, Reifegrad 1–5.</p></div>
+    <div class="step"><div class="n">2</div><h3>Nutzen für Kunden klassifizieren</h3><p>Elf Nutzenkomponenten nach Vershofen, Meffert und Farny: Grundnutzen, Erbauungsnutzen, Geltungsnutzen.</p></div>
+    <div class="step"><div class="n">3</div><h3>Beides verbinden</h3><p>Welche KI-Ansätze zahlen auf welchen Kundennutzen ein?</p></div>
+  </div>
+  <aside class="notes"><p><b>4:00–5:00.</b> Wie finde ich heraus, wo KI konkret Nutzen stiftet? In drei Schritten.</p><p><b>Erstens</b> die Use Cases systematisieren – dafür das KI-Radar. <b>Zweitens</b> den Nutzen für Kunden klassifizieren – wissenschaftlich, nach Grund- und Zusatznutzen. <b>Drittens</b> beides verbinden: Welche KI-Ansätze zahlen auf welchen Kundennutzen ein?</p></aside>
+</section>
+
+<section class="slide" data-chapter="2" data-title="Das KI-Radar">
+  <div class="kicker">Schritt 1 · Use Cases systematisieren · Prototyp</div>
+  <h2>KI wirkt entlang der kompletten <em>Wertschöpfungskette</em></h2>
+  <div class="rb">
+    <svg class="rbs" viewBox="0 0 1240 960" font-family="Arial, Helvetica, sans-serif"><defs><marker id="ar5" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#141414"/></marker></defs><g class="L0"><path d="M652.7,356.2 A128,128 0 0 1 748.0,482.3 L680.0,481.1 A60,60 0 0 0 635.3,422.0 Z" fill="rgba(134,134,139,0.048)" stroke="#fff" stroke-width="2"/><path d="M670.1,290.5 A196,196 0 0 1 816.0,483.5 L748.0,482.3 A128,128 0 0 0 652.7,356.2 Z" fill="rgba(134,134,139,0.08000000000000002)" stroke="#fff" stroke-width="2"/><path d="M687.4,224.8 A264,264 0 0 1 884.0,484.7 L816.0,483.5 A196,196 0 0 0 670.1,290.5 Z" fill="rgba(134,134,139,0.12)" stroke="#fff" stroke-width="2"/><path d="M704.8,159.0 A332,332 0 0 1 951.9,485.9 L884.0,484.7 A264,264 0 0 0 687.4,224.8 Z" fill="rgba(134,134,139,0.16000000000000003)" stroke="#fff" stroke-width="2"/><path d="M722.2,93.3 A400,400 0 0 1 1019.9,487.1 L951.9,485.9 A332,332 0 0 0 704.8,159.0 Z" fill="rgba(134,134,139,0.20800000000000002)" stroke="#fff" stroke-width="2"/><path d="M747.9,485.8 A128,128 0 0 1 706.1,574.7 L660.4,524.4 A60,60 0 0 0 679.9,482.7 Z" fill="rgba(134,134,139,0.048)" stroke="#fff" stroke-width="2"/><path d="M815.8,488.9 A196,196 0 0 1 751.9,625.0 L706.1,574.7 A128,128 0 0 0 747.9,485.8 Z" fill="rgba(134,134,139,0.08000000000000002)" stroke="#fff" stroke-width="2"/><path d="M883.7,492.0 A264,264 0 0 1 797.7,675.3 L751.9,625.0 A196,196 0 0 0 815.8,488.9 Z" fill="rgba(134,134,139,0.12)" stroke="#fff" stroke-width="2"/><path d="M951.7,495.1 A332,332 0 0 1 843.4,725.6 L797.7,675.3 A264,264 0 0 0 883.7,492.0 Z" fill="rgba(134,134,139,0.16000000000000003)" stroke="#fff" stroke-width="2"/><path d="M1019.6,498.2 A400,400 0 0 1 889.2,775.9 L843.4,725.6 A332,332 0 0 0 951.7,495.1 Z" fill="rgba(134,134,139,0.20800000000000002)" stroke="#fff" stroke-width="2"/><path d="M703.5,577.0 A128,128 0 0 1 610.2,607.6 L615.4,539.8 A60,60 0 0 0 659.1,525.5 Z" fill="rgba(134,134,139,0.048)" stroke="#fff" stroke-width="2"/><path d="M747.8,628.6 A196,196 0 0 1 605.0,675.4 L610.2,607.6 A128,128 0 0 0 703.5,577.0 Z" fill="rgba(134,134,139,0.08000000000000002)" stroke="#fff" stroke-width="2"/><path d="M792.2,680.1 A264,264 0 0 1 599.8,743.2 L605.0,675.4 A196,196 0 0 0 747.8,628.6 Z" fill="rgba(134,134,139,0.12)" stroke="#fff" stroke-width="2"/><path d="M836.5,731.7 A332,332 0 0 1 594.6,811.0 L599.8,743.2 A264,264 0 0 0 792.2,680.1 Z" fill="rgba(134,134,139,0.16000000000000003)" stroke="#fff" stroke-width="2"/><path d="M880.8,783.3 A400,400 0 0 1 589.4,878.8 L594.6,811.0 A332,332 0 0 0 836.5,731.7 Z" fill="rgba(134,134,139,0.20800000000000002)" stroke="#fff" stroke-width="2"/><path d="M606.6,607.3 A128,128 0 0 1 520.4,560.4 L573.3,517.7 A60,60 0 0 0 613.7,539.7 Z" fill="rgba(134,134,139,0.048)" stroke="#fff" stroke-width="2"/><path d="M599.6,674.9 A196,196 0 0 1 467.5,603.1 L520.4,560.4 A128,128 0 0 0 606.6,607.3 Z" fill="rgba(134,134,139,0.08000000000000002)" stroke="#fff" stroke-width="2"/><path d="M592.5,742.6 A264,264 0 0 1 414.6,645.9 L467.5,603.1 A196,196 0 0 0 599.6,674.9 Z" fill="rgba(134,134,139,0.12)" stroke="#fff" stroke-width="2"/><path d="M585.4,810.2 A332,332 0 0 1 361.7,688.6 L414.6,645.9 A264,264 0 0 0 592.5,742.6 Z" fill="rgba(134,134,139,0.16000000000000003)" stroke="#fff" stroke-width="2"/><path d="M578.3,877.8 A400,400 0 0 1 308.8,731.3 L361.7,688.6 A332,332 0 0 0 585.4,810.2 Z" fill="rgba(134,134,139,0.20800000000000002)" stroke="#fff" stroke-width="2"/><path d="M518.2,557.6 A128,128 0 0 1 498.4,440.2 L563.0,461.3 A60,60 0 0 0 572.3,516.4 Z" fill="rgba(134,134,139,0.048)" stroke="#fff" stroke-width="2"/><path d="M464.1,598.8 A196,196 0 0 1 433.7,419.0 L498.4,440.2 A128,128 0 0 0 518.2,557.6 Z" fill="rgba(134,134,139,0.08000000000000002)" stroke="#fff" stroke-width="2"/><path d="M410.1,640.1 A264,264 0 0 1 369.1,397.8 L433.7,419.0 A196,196 0 0 0 464.1,598.8 Z" fill="rgba(134,134,139,0.12)" stroke="#fff" stroke-width="2"/><path d="M356.0,681.3 A332,332 0 0 1 304.5,376.6 L369.1,397.8 A264,264 0 0 0 410.1,640.1 Z" fill="rgba(134,134,139,0.16000000000000003)" stroke="#fff" stroke-width="2"/><path d="M301.9,722.5 A400,400 0 0 1 239.9,355.5 L304.5,376.6 A332,332 0 0 0 356.0,681.3 Z" fill="rgba(134,134,139,0.20800000000000002)" stroke="#fff" stroke-width="2"/><path d="M499.5,436.8 A128,128 0 0 1 587.3,356.2 L604.7,422.0 A60,60 0 0 0 563.5,459.7 Z" fill="rgba(134,134,139,0.048)" stroke="#fff" stroke-width="2"/><path d="M435.5,413.8 A196,196 0 0 1 569.9,290.5 L587.3,356.2 A128,128 0 0 0 499.5,436.8 Z" fill="rgba(134,134,139,0.08000000000000002)" stroke="#fff" stroke-width="2"/><path d="M371.5,390.8 A264,264 0 0 1 552.6,224.8 L569.9,290.5 A196,196 0 0 0 435.5,413.8 Z" fill="rgba(134,134,139,0.12)" stroke="#fff" stroke-width="2"/><path d="M307.5,367.9 A332,332 0 0 1 535.2,159.0 L552.6,224.8 A264,264 0 0 0 371.5,390.8 Z" fill="rgba(134,134,139,0.16000000000000003)" stroke="#fff" stroke-width="2"/><path d="M243.5,344.9 A400,400 0 0 1 517.8,93.3 L535.2,159.0 A332,332 0 0 0 307.5,367.9 Z" fill="rgba(134,134,139,0.20800000000000002)" stroke="#fff" stroke-width="2"/></g><g class="L1"><path d="M652.7,356.2 A128,128 0 0 1 748.0,482.3 L680.0,481.1 A60,60 0 0 0 635.3,422.0 Z" fill="rgba(226,67,0,0.06)" stroke="#fff" stroke-width="2"/><path d="M670.1,290.5 A196,196 0 0 1 816.0,483.5 L748.0,482.3 A128,128 0 0 0 652.7,356.2 Z" fill="rgba(226,67,0,0.1)" stroke="#fff" stroke-width="2"/><path d="M687.4,224.8 A264,264 0 0 1 884.0,484.7 L816.0,483.5 A196,196 0 0 0 670.1,290.5 Z" fill="rgba(226,67,0,0.15)" stroke="#fff" stroke-width="2"/><path d="M704.8,159.0 A332,332 0 0 1 951.9,485.9 L884.0,484.7 A264,264 0 0 0 687.4,224.8 Z" fill="rgba(226,67,0,0.2)" stroke="#fff" stroke-width="2"/><path d="M722.2,93.3 A400,400 0 0 1 1019.9,487.1 L951.9,485.9 A332,332 0 0 0 704.8,159.0 Z" fill="rgba(226,67,0,0.26)" stroke="#fff" stroke-width="2"/><path d="M726.3,77.8 A416,416 0 0 1 1035.9,487.4 L1023.9,487.1 A404,404 0 0 0 723.2,89.4 Z" fill="#E24300"/><text x="970.9658785001395" y="209.62676825153346" font-size="23" font-weight="700" fill="#E24300" text-anchor="start"><tspan x="970.9658785001395" dy="0">Marketing &amp;</tspan><tspan x="970.9658785001395" dy="26">Vertrieb</tspan></text><path d="M747.9,485.8 A128,128 0 0 1 706.1,574.7 L660.4,524.4 A60,60 0 0 0 679.9,482.7 Z" fill="rgba(160,0,8,0.06)" stroke="#fff" stroke-width="2"/><path d="M815.8,488.9 A196,196 0 0 1 751.9,625.0 L706.1,574.7 A128,128 0 0 0 747.9,485.8 Z" fill="rgba(160,0,8,0.1)" stroke="#fff" stroke-width="2"/><path d="M883.7,492.0 A264,264 0 0 1 797.7,675.3 L751.9,625.0 A196,196 0 0 0 815.8,488.9 Z" fill="rgba(160,0,8,0.15)" stroke="#fff" stroke-width="2"/><path d="M951.7,495.1 A332,332 0 0 1 843.4,725.6 L797.7,675.3 A264,264 0 0 0 883.7,492.0 Z" fill="rgba(160,0,8,0.2)" stroke="#fff" stroke-width="2"/><path d="M1019.6,498.2 A400,400 0 0 1 889.2,775.9 L843.4,725.6 A332,332 0 0 0 951.7,495.1 Z" fill="rgba(160,0,8,0.26)" stroke="#fff" stroke-width="2"/><path d="M1035.6,499.0 A416,416 0 0 1 900.0,787.7 L891.9,778.8 A404,404 0 0 0 1023.6,498.4 Z" fill="#A00008"/><text x="1018.2668385793314" y="662.0388336362926" font-size="23" font-weight="700" fill="#A00008" text-anchor="start"><tspan x="1018.2668385793314" dy="0">Produkt &amp;</tspan><tspan x="1018.2668385793314" dy="26">Pricing</tspan></text><path d="M703.5,577.0 A128,128 0 0 1 610.2,607.6 L615.4,539.8 A60,60 0 0 0 659.1,525.5 Z" fill="rgba(157,22,122,0.06)" stroke="#fff" stroke-width="2"/><path d="M747.8,628.6 A196,196 0 0 1 605.0,675.4 L610.2,607.6 A128,128 0 0 0 703.5,577.0 Z" fill="rgba(157,22,122,0.1)" stroke="#fff" stroke-width="2"/><path d="M792.2,680.1 A264,264 0 0 1 599.8,743.2 L605.0,675.4 A196,196 0 0 0 747.8,628.6 Z" fill="rgba(157,22,122,0.15)" stroke="#fff" stroke-width="2"/><path d="M836.5,731.7 A332,332 0 0 1 594.6,811.0 L599.8,743.2 A264,264 0 0 0 792.2,680.1 Z" fill="rgba(157,22,122,0.2)" stroke="#fff" stroke-width="2"/><path d="M880.8,783.3 A400,400 0 0 1 589.4,878.8 L594.6,811.0 A332,332 0 0 0 836.5,731.7 Z" fill="rgba(157,22,122,0.26)" stroke="#fff" stroke-width="2"/><path d="M891.3,795.4 A416,416 0 0 1 588.2,894.8 L589.1,882.8 A404,404 0 0 0 883.4,786.3 Z" fill="#9D167A"/><text x="757.1081564154767" y="907.0925178047906" font-size="23" font-weight="700" fill="#9D167A" text-anchor="start"><tspan x="757.1081564154767" dy="0">Underwriting &amp;</tspan><tspan x="757.1081564154767" dy="26">Antrag</tspan></text><path d="M606.6,607.3 A128,128 0 0 1 520.4,560.4 L573.3,517.7 A60,60 0 0 0 613.7,539.7 Z" fill="rgba(224,96,126,0.06)" stroke="#fff" stroke-width="2"/><path d="M599.6,674.9 A196,196 0 0 1 467.5,603.1 L520.4,560.4 A128,128 0 0 0 606.6,607.3 Z" fill="rgba(224,96,126,0.1)" stroke="#fff" stroke-width="2"/><path d="M592.5,742.6 A264,264 0 0 1 414.6,645.9 L467.5,603.1 A196,196 0 0 0 599.6,674.9 Z" fill="rgba(224,96,126,0.15)" stroke="#fff" stroke-width="2"/><path d="M585.4,810.2 A332,332 0 0 1 361.7,688.6 L414.6,645.9 A264,264 0 0 0 592.5,742.6 Z" fill="rgba(224,96,126,0.2)" stroke="#fff" stroke-width="2"/><path d="M578.3,877.8 A400,400 0 0 1 308.8,731.3 L361.7,688.6 A332,332 0 0 0 585.4,810.2 Z" fill="rgba(224,96,126,0.26)" stroke="#fff" stroke-width="2"/><path d="M576.6,893.7 A416,416 0 0 1 296.4,741.4 L305.7,733.8 A404,404 0 0 0 577.9,881.8 Z" fill="#E0607E"/><text x="409.8392757570453" y="875.5649621805845" font-size="23" font-weight="700" fill="#E0607E" text-anchor="end"><tspan x="409.8392757570453" dy="0">Bestand &amp;</tspan><tspan x="409.8392757570453" dy="26">Service</tspan></text><path d="M518.2,557.6 A128,128 0 0 1 498.4,440.2 L563.0,461.3 A60,60 0 0 0 572.3,516.4 Z" fill="rgba(0,82,148,0.06)" stroke="#fff" stroke-width="2"/><path d="M464.1,598.8 A196,196 0 0 1 433.7,419.0 L498.4,440.2 A128,128 0 0 0 518.2,557.6 Z" fill="rgba(0,82,148,0.1)" stroke="#fff" stroke-width="2"/><path d="M410.1,640.1 A264,264 0 0 1 369.1,397.8 L433.7,419.0 A196,196 0 0 0 464.1,598.8 Z" fill="rgba(0,82,148,0.15)" stroke="#fff" stroke-width="2"/><path d="M356.0,681.3 A332,332 0 0 1 304.5,376.6 L369.1,397.8 A264,264 0 0 0 410.1,640.1 Z" fill="rgba(0,82,148,0.2)" stroke="#fff" stroke-width="2"/><path d="M301.9,722.5 A400,400 0 0 1 239.9,355.5 L304.5,376.6 A332,332 0 0 0 356.0,681.3 Z" fill="rgba(0,82,148,0.26)" stroke="#fff" stroke-width="2"/><path d="M289.2,732.2 A416,416 0 0 1 224.7,350.5 L236.1,354.2 A404,404 0 0 0 298.7,725.0 Z" fill="#005294"/><text x="186.15374194491108" y="548.3309237061499" font-size="23" font-weight="700" fill="#005294" text-anchor="end"><tspan x="186.15374194491108" dy="0">Schaden &amp;</tspan><tspan x="186.15374194491108" dy="26">Leistung</tspan></text><path d="M499.5,436.8 A128,128 0 0 1 587.3,356.2 L604.7,422.0 A60,60 0 0 0 563.5,459.7 Z" fill="rgba(77,77,77,0.06)" stroke="#fff" stroke-width="2"/><path d="M435.5,413.8 A196,196 0 0 1 569.9,290.5 L587.3,356.2 A128,128 0 0 0 499.5,436.8 Z" fill="rgba(77,77,77,0.1)" stroke="#fff" stroke-width="2"/><path d="M371.5,390.8 A264,264 0 0 1 552.6,224.8 L569.9,290.5 A196,196 0 0 0 435.5,413.8 Z" fill="rgba(77,77,77,0.15)" stroke="#fff" stroke-width="2"/><path d="M307.5,367.9 A332,332 0 0 1 535.2,159.0 L552.6,224.8 A264,264 0 0 0 371.5,390.8 Z" fill="rgba(77,77,77,0.2)" stroke="#fff" stroke-width="2"/><path d="M243.5,344.9 A400,400 0 0 1 517.8,93.3 L535.2,159.0 A332,332 0 0 0 307.5,367.9 Z" fill="rgba(77,77,77,0.26)" stroke="#fff" stroke-width="2"/><path d="M228.4,339.5 A416,416 0 0 1 513.7,77.8 L516.8,89.4 A404,404 0 0 0 239.7,343.6 Z" fill="#4D4D4D"/><text x="322.5634190128518" y="150.76015005759143" font-size="23" font-weight="700" fill="#4D4D4D" text-anchor="end"><tspan x="322.5634190128518" dy="0">Fundament &amp;</tspan><tspan x="322.5634190128518" dy="26">Zentrale</tspan></text></g><g><text x="620" y="391" font-size="15" font-weight="700" fill="#474747" text-anchor="middle" stroke="#fff" stroke-width="5" stroke-linejoin="round" paint-order="stroke">Exploration</text><text x="620" y="323" font-size="15" font-weight="700" fill="#474747" text-anchor="middle" stroke="#fff" stroke-width="5" stroke-linejoin="round" paint-order="stroke">Pilot</text><text x="620" y="255" font-size="15" font-weight="700" fill="#474747" text-anchor="middle" stroke="#fff" stroke-width="5" stroke-linejoin="round" paint-order="stroke">Produktiv</text><text x="620" y="187" font-size="15" font-weight="700" fill="#474747" text-anchor="middle" stroke="#fff" stroke-width="5" stroke-linejoin="round" paint-order="stroke">Skaliert</text><text x="620" y="119" font-size="15" font-weight="700" fill="#474747" text-anchor="middle" stroke="#fff" stroke-width="5" stroke-linejoin="round" paint-order="stroke">KI-nativ</text></g><g class="L3"><circle cx="620" cy="480" r="196" fill="none" stroke="#9D167A" stroke-width="3" stroke-dasharray="10 7"/></g><g class="L4"><line x1="653.9178115346899" y1="392.33254845327565" x2="690.7222453276512" y2="297.20403720044715" stroke="#E24300" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="658.8250693737514" cy="379.64874695289853" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="666.1859561323437" cy="360.62304470233283" r="20" fill="#E24300" stroke="#fff" stroke-width="2.5"/><text x="666.1859561323437" y="366.62304470233283" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">1</text><line x1="672.3641917974979" y1="401.93597872646546" x2="786.005629315472" y2="232.52044319666706" stroke="#E24300" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="721.6088147219533" cy="328.5225799968862" r="20" fill="#E24300" stroke="#fff" stroke-width="2.5"/><text x="721.6088147219533" y="334.5225799968862" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">2</text><line x1="688.2475071450344" y1="415.36040092568277" x2="762.3033127704973" y2="345.2195593769556" stroke="#E24300" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="707.9957219784912" cy="396.6561765126889" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="722.8068831035838" cy="382.6280082029434" r="20" fill="#E24300" stroke="#fff" stroke-width="2.5"/><text x="722.8068831035838" y="388.6280082029434" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">3</text><line x1="700.7903185123963" y1="431.9487311856851" x2="846.9004690135387" y2="345.04750035128586" stroke="#E24300" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="718.3235365725334" cy="421.5205834855572" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="718.3235365725334" y1="421.5205834855572" x2="728.637194254967" y2="415.3863789560702" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="747.5455666727619" cy="404.1403373186774" r="20" fill="#E24300" stroke="#141414" stroke-width="3.5"/><text x="747.5455666727619" y="410.1403373186774" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">4</text><line x1="709.3786941525058" y1="450.88902214639916" x2="903.3494772068799" y2="387.7120063790102" stroke="#E24300" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="754.6385435318597" cy="436.14771846734175" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="754.6385435318597" y1="436.14771846734175" x2="766.0485895938817" y2="432.4314234222012" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="786.9670073742554" cy="425.61821583944356" r="20" fill="#E24300" stroke="#141414" stroke-width="3.5"/><text x="786.9670073742554" y="431.61821583944356" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">5</text><line x1="713.5922596925955" y1="471.2542052600247" x2="882.8548570089914" y2="455.4373424324099" stroke="#E24300" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="754.2152830485304" cy="467.45815818139715" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="781.2972986191538" cy="464.9274601289788" r="20" fill="#E24300" stroke="#141414" stroke-width="3.5"/><text x="781.2972986191538" y="470.9274601289788" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">6</text><line x1="746.0057824391688" y1="502.50650554601646" x2="946.8274982015939" y2="538.3762487599802" stroke="#A00008" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="819.640411552058" cy="515.6587447244699" r="20" fill="#A00008" stroke="#fff" stroke-width="2.5"/><text x="819.640411552058" y="521.6587447244699" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">7</text><line x1="705.084279151039" y1="519.9582962768443" x2="920.5104327462228" y2="621.1293017437481" stroke="#A00008" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="742.0144769102134" cy="537.3018972140278" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="760.4795757898005" cy="545.9736976826196" r="20" fill="#A00008" stroke="#fff" stroke-width="2.5"/><text x="760.4795757898005" y="551.9736976826196" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">8</text><line x1="691.8122672993566" y1="540.6547464369092" x2="795.7108667962981" y2="628.4105497924376" stroke="#A00008" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="712.5919871987448" cy="558.2059071080149" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="728.1767771232861" cy="571.3692776113442" r="20" fill="#A00008" stroke="#fff" stroke-width="2.5"/><text x="728.1767771232861" y="577.3692776113442" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">9</text><line x1="671.450921290527" y1="558.6689436712861" x2="783.1103674955004" y2="729.3972895110987" stroke="#9D167A" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="708.6707366921848" cy="615.578392284557" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="719.8366813126822" cy="632.6512268685383" r="20" fill="#9D167A" stroke="#fff" stroke-width="2.5"/><text x="719.8366813126822" y="638.6512268685383" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">10</text><line x1="649.2912879614883" y1="569.3197651673871" x2="702.264893849286" y2="730.8555106828744" stroke="#9D167A" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="662.0049533745597" cy="608.0883440911041" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="668.3617860810954" cy="627.4726335529625" r="20" fill="#9D167A" stroke="#fff" stroke-width="2.5"/><text x="668.3617860810954" y="633.4726335529625" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">11</text><line x1="625.1277760044927" y1="573.860033631188" x2="634.4014134594262" y2="743.6069029641876" stroke="#9D167A" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="628.4662854882688" cy="634.9689065910679" r="20" fill="#9D167A" stroke="#fff" stroke-width="2.5"/><text x="628.4662854882688" y="640.9689065910679" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">12</text><line x1="582.1761233487226" y1="637.5225518935906" x2="542.4844009368883" y2="802.8239952387166" stroke="#E0607E" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="572.6501099698824" cy="677.1948982964209" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="567.8871032804623" cy="697.0310714978359" r="20" fill="#E0607E" stroke="#fff" stroke-width="2.5"/><text x="567.8871032804623" y="703.0310714978359" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">13</text><line x1="531.7927579909888" y1="572.7549592052292" x2="414.6425146977707" y2="695.9451393996741" stroke="#E0607E" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="498.99068986888767" cy="607.2482096596738" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="498.99068986888767" y1="607.2482096596738" x2="486.0352511988142" y2="620.8715942929417" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="470.8746314785154" cy="636.8138529063406" r="20" fill="#E0607E" stroke="#141414" stroke-width="3.5"/><text x="470.8746314785154" y="642.8138529063406" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">15</text><line x1="509.5894194125034" y1="544.7572675020489" x2="333.6225566011807" y2="647.9641625834394" stroke="#005294" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="456.7993605691066" cy="575.7193360264661" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="439.20267428797433" cy="586.0400255346051" r="20" fill="#005294" stroke="#fff" stroke-width="2.5"/><text x="439.20267428797433" y="592.0400255346051" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">16</text><line x1="497.2879409350278" y1="516.4108577217672" x2="301.71559680022835" y2="574.4406622158336" stroke="#005294" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="464.6925502458946" cy="526.0824918041117" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="464.6925502458946" y1="526.0824918041117" x2="453.1882947085534" y2="529.4960097155273" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="432.0971595567613" cy="535.754125886456" r="20" fill="#005294" stroke="#141414" stroke-width="3.5"/><text x="432.0971595567613" y="541.754125886456" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">17</text><line x1="458.1746751162127" y1="487.5209192427988" x2="288.3579761640903" y2="495.41324190499506" stroke="#005294" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="410.62599940961843" cy="489.7307695882138" r="20" fill="#005294" stroke="#fff" stroke-width="2.5"/><text x="410.62599940961843" y="495.7307695882138" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">18</text><line x1="527.7917094372718" y1="461.734427151072" x2="361.03203501531664" y2="428.70094433918086" stroke="#005294" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="474.4286136222462" cy="451.16371265126685" r="20" fill="#005294" stroke="#fff" stroke-width="2.5"/><text x="474.4286136222462" y="457.16371265126685" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">19</text><line x1="475.236138940119" y1="407.2853210758964" x2="323.32344523530566" y2="330.9797938098618" stroke="#4D4D4D" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="444.85360019915635" cy="392.0242156226895" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="444.85360019915635" y1="392.0242156226895" x2="428.0538434835652" y2="383.58572201915155" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="408.3945537100011" cy="373.71088907884115" r="20" fill="#4D4D4D" stroke="#141414" stroke-width="3.5"/><text x="408.3945537100011" y="379.71088907884115" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">20</text><line x1="522.7201965767981" y1="396.8096168662314" x2="393.52045765535826" y2="286.3223892666949" stroke="#4D4D4D" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="491.7122592356526" cy="370.29268224234266" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="491.7122592356526" y1="370.29268224234266" x2="477.4242881078698" y2="358.0740947195704" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="460.70432189450696" cy="343.7757476184539" r="20" fill="#4D4D4D" stroke="#141414" stroke-width="3.5"/><text x="460.70432189450696" y="349.7757476184539" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">21</text><line x1="565.2825251706095" y1="403.5670362455111" x2="446.53396277491083" y2="237.69124256555648" stroke="#4D4D4D" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="529.6579564518998" cy="353.8042981415247" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="513.8248147991401" cy="331.68752565086413" r="20" fill="#4D4D4D" stroke="#141414" stroke-width="3.5"/><text x="513.8248147991401" y="337.68752565086413" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">22</text><line x1="585.1937929901428" y1="392.68145698886764" x2="522.2463973340182" y2="234.76494303256447" stroke="#4D4D4D" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/><circle cx="570.0864180326729" cy="354.7814936393549" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><circle cx="562.532730553938" cy="335.8315119645985" r="20" fill="#4D4D4D" stroke="#fff" stroke-width="2.5"/><text x="562.532730553938" y="341.8315119645985" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">23</text></g><g class="L2"><line x1="558.8623347656859" y1="592.4552617252609" x2="477.66387312636255" y2="741.8099062041231" stroke="#E0607E" stroke-opacity="0.35" stroke-width="16" stroke-linecap="round"/><circle cx="542.6226424378212" cy="622.3261906210334" r="6" fill="#fff" stroke="#141414" stroke-width="2"/><line x1="542.6226424378212" y1="622.3261906210334" x2="533.6430478565313" y2="638.8430571869311" stroke="#141414" stroke-width="2.6" marker-end="url(#ar5)"/><circle cx="523.1350116443837" cy="658.1713052959603" r="20" fill="#E0607E" stroke="#141414" stroke-width="3.5"/><text x="523.1350116443837" y="664.1713052959603" font-size="17" font-weight="700" fill="#fff" text-anchor="middle">14</text></g><g class="L2 L2a"><circle cx="523.1350116443837" cy="658.1713052959603" r="31" fill="none" stroke="#1d1d1f" stroke-width="2.5"/><circle cx="495.0567093196138" cy="639.740458600683" r="15" fill="#1d1d1f"/><text x="495.0567093196138" y="645.240458600683" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">a</text><circle cx="455.3872682276532" cy="728.4082296109478" r="15" fill="#1d1d1f"/><text x="455.3872682276532" y="733.9082296109478" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">b</text><circle cx="563.2974205146439" cy="627.4748028637669" r="15" fill="#1d1d1f"/><text x="563.2974205146439" y="632.9748028637669" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">c</text></g></svg>
+    <div class="rx0 Lp0"><div class="h">So liest man das Radar</div><p><b>Ringe</b> = Reife von innen nach außen: Exploration, Pilot, Produktiv, Skaliert, KI-nativ</p><p class="L1"><b>Segmente</b> = sechs Stufen der Wertschöpfung</p></div>
+    <div class="rx0 rxe L2"><div class="h">Beispiel 14 · Chat- &amp; Voicebots</div>
+      <div class="ri"><span class="bd">a</span><span><b>Punkt</b> = Branchenmittel 2026<em>2,6</em></span></div>
+      <div class="ri"><span class="bd">b</span><span><b>Balken</b> = Spanne von Nachzüglern bis Vorreitern<em>1,5 – 4,0</em></span></div>
+      <div class="ri"><span class="bd">c</span><span><b>Pfeil</b> = Bewegung seit 2025<em>2,0 → 2,6</em></span></div>
+      <p class="rv">Vorreiter: ERGO erkennt mit Cognigy rund 96 % der Anliegen; R+V „Emmie“ löst rund die Hälfte der Anfragen außerhalb der Servicezeiten.</p>
+      <p class="L3 rv"><b style="color:#9D167A">- - -</b> Schwelle 2,5: vom Pilot in den Regelbetrieb</p></div>
+    <div class="rleg L4">
+      <div class="rst"><div><span class="num-l">2,25</span><span class="lbl">Branchen-Ø (1–5)</span></div><div><span class="num-l">14<span style="font-size:36px;color:var(--muted)">&nbsp;/&nbsp;23</span></span><span class="lbl">unter der Schwelle 2,5</span></div></div>
+      <div class="rsec"><div class="rsh" style="color:#E24300">Marketing & Vertrieb</div><div class="rd"><span class="rn" style="background:#E24300">1</span><span class="rt">KI-Marktforschung</span><span class="rv">1,5</span></div><div class="rd"><span class="rn" style="background:#E24300">2</span><span class="rt">Next Best Offer &amp; Storno</span><span class="rv">2,3</span></div><div class="rd"><span class="rn" style="background:#E24300">3</span><span class="rt">Personalisierte Anschreiben</span><span class="rv">1,7</span></div><div class="rd"><span class="rn" style="background:#E24300">4</span><span class="rt">KI-Bilder &amp; -Videos</span><span class="rv">1,8</span></div><div class="rd"><span class="rn" style="background:#E24300">5</span><span class="rt">Kampagnen &amp; KI-Sichtbarkeit</span><span class="rv">2,2</span></div><div class="rd"><span class="rn" style="background:#E24300">6</span><span class="rt">Vertriebs-Copilot</span><span class="rv">2,0</span></div></div><div class="rsec"><div class="rsh" style="color:#A00008">Produkt & Pricing</div><div class="rd"><span class="rn" style="background:#A00008">7</span><span class="rt">ML-Tarifierung</span><span class="rv">2,6</span></div><div class="rd"><span class="rn" style="background:#A00008">8</span><span class="rt">Pricing-Optimierung</span><span class="rv">1,9</span></div><div class="rd"><span class="rn" style="background:#A00008">9</span><span class="rt">Bedingungen &amp; Produktdaten</span><span class="rv">1,7</span></div></div><div class="rsec"><div class="rsh" style="color:#9D167A">Underwriting & Antrag</div><div class="rd"><span class="rn" style="background:#9D167A">10</span><span class="rt">Antragsextraktion</span><span class="rv">2,3</span></div><div class="rd"><span class="rn" style="background:#9D167A">11</span><span class="rt">Underwriting-Assistenz</span><span class="rv">1,9</span></div><div class="rd"><span class="rn" style="background:#9D167A">12</span><span class="rt">Automatisierte Annahme</span><span class="rv">1,9</span></div></div><div class="rsec"><div class="rsh" style="color:#E0607E">Bestand & Kundenservice</div><div class="rd"><span class="rn" style="background:#E0607E">13</span><span class="rt">Input-Management</span><span class="rv">2,9</span></div><div class="rd"><span class="rn" style="background:#E0607E">14</span><span class="rt">Chat- &amp; Voicebots</span><span class="rv">2,6</span></div><div class="rd"><span class="rn" style="background:#E0607E">15</span><span class="rt">Service-Copilot</span><span class="rv">2,8</span></div></div><div class="rsec"><div class="rsh" style="color:#005294">Schaden & Leistung</div><div class="rd"><span class="rn" style="background:#005294">16</span><span class="rt">Schadenaufnahme &amp; Triage</span><span class="rv">2,7</span></div><div class="rd"><span class="rn" style="background:#005294">17</span><span class="rt">Dunkelverarbeitung</span><span class="rv">2,5</span></div><div class="rd"><span class="rn" style="background:#005294">18</span><span class="rt">Betrug &amp; Regress</span><span class="rv">2,7</span></div><div class="rd"><span class="rn" style="background:#005294">19</span><span class="rt">Prävention &amp; Assistance</span><span class="rv">1,8</span></div></div><div class="rsec"><div class="rsh" style="color:#4D4D4D">KI-Fundament & Zentralfunktionen</div><div class="rd"><span class="rn" style="background:#4D4D4D">20</span><span class="rt">Enterprise-GenAI</span><span class="rv">3,1</span></div><div class="rd"><span class="rn" style="background:#4D4D4D">21</span><span class="rt">KI-Governance</span><span class="rv">2,7</span></div><div class="rd"><span class="rn" style="background:#4D4D4D">22</span><span class="rt">IT &amp; Softwareentwicklung</span><span class="rv">2,3</span></div><div class="rd"><span class="rn" style="background:#4D4D4D">23</span><span class="rt">Finanzen, Risiko &amp; Kapitalanlage</span><span class="rv">1,9</span></div></div>
+    </div>
+    <i class="mk m1" data-add="on"></i><i class="mk m2" data-add="on"></i><i class="mk m3" data-add="on"></i><i class="mk m4" data-add="on"></i>
+  </div>
+  <div class="source" style="bottom:96px">Quelle: KI-Implementierungsradar Versicherung v0.5 (Orbach, ivwKöln, 11/2026) – indikative Einschätzung auf Basis öffentlicher Quellen; Beispiele: ERGO (Cognigy), R+V</div>
+  <aside class="notes"><p><b>5:00–7:00.</b> Schritt eins: Um Use Cases zu ordnen, baue ich am ivwKöln das KI-Implementierungsradar der Versicherungswirtschaft – ein Prototyp. Ich baue es Stück für Stück auf.</p><p><b>Start – die Ringe:</b> Von innen nach außen fünf Reifestufen: Exploration, Pilot, Produktiv, Skaliert, KI-nativ.</p><p><b>Klick – die Stufen:</b> Rundherum sechs Stufen der Wertschöpfung, von Marketing und Vertrieb über Produkt, Underwriting, Bestand und Schaden bis zum KI-Fundament.</p><p><b>Klick – ein Beispiel, Nummer 14, Chat- & Voicebots:</b> a) Der Punkt ist das Branchenmittel 2026, 2,6. b) Der Balken ist die Spanne – vom Nachzügler bei 1,5 bis zum Vorreiter bei 4,0. c) Der Pfeil zeigt die Bewegung seit 2025, von 2,0 auf 2,6. Vorreiter: ERGO erkennt mit Cognigy rund 96 % der Anliegen, die R+V-Assistentin Emmie löst rund die Hälfte der Anfragen außerhalb der Servicezeiten.</p><p><b>Klick – die Schwelle:</b> Die gestrichelte Linie bei 2,5 trennt Pilot und Regelbetrieb.</p><p><b>Klick – alle 23 Dimensionen:</b> Die Branche steht im Schnitt bei 2,3, 14 von 23 Dimensionen liegen noch unter der Schwelle. Am weitesten: Bestand und Service sowie Schaden.</p><p>Methodik: Desk Research, 41 öffentlich dokumentierte Use Cases, zwölf Versicherer, indikative Einschätzung.</p></aside>
+</section>
+
+<section class="slide" data-chapter="2" data-title="Kundennutzen in der Versicherung">
+  <div class="kicker">Schritt 2 · Nutzen für Kunden klassifizieren</div>
+  <h2>Elf Nutzen für die <em>Kunden</em></h2>
+  <p class="formula"><b>Wahrgenommener Kundennutzen = Leistung − Prämie − Zeit, Mühe und Unsicherheit</b> &nbsp;· Nettonutzen nach Meffert et al. (2024)</p>
+  <div class="nz2">
+    <div class="lv" style="--lc:#C00009"><div class="lh"><b>Grundnutzen</b><span>das Versprechen</span></div><div class="it it-GN1"><div class="c">GN1</div><div><h3>Leistung im Schadenfall</h3><p>„Zahlt die Versicherung vollständig, wenn es darauf ankommt?“</p></div></div><div class="it it-GN2"><div class="c">GN2</div><div><h3>Existenz- und Vermögenssicherung</h3><p>„Bin ich gegen die Risiken abgesichert, die mich ruinieren könnten – und ist mein Alter versorgt?“</p></div></div><div class="it it-GN3"><div class="c">GN3</div><div><h3>Preis-Leistung</h3><p>„Zahle ich einen fairen Preis für meinen Schutz?“</p></div></div></div>
+    <div class="lv step" style="--lc:#E24300;grid-column:span 2"><div class="lh"><b>Zusatznutzen · Erbauungsnutzen</b><span>das Erlebnis</span></div>
+      <div class="two"><div><div class="it it-ZE1"><div class="c">ZE1</div><div><h3>Gefühl der Sicherheit</h3><p>„Kann ich ruhig schlafen?“</p></div></div><div class="it it-ZE2"><div class="c">ZE2</div><div><h3>Schnelle Hilfe im Notfall</h3><p>„Hilft mir jemand – sofort?“</p></div></div><div class="it it-ZE3"><div class="c">ZE3</div><div><h3>Zeit und Bequemlichkeit</h3><p>„Wie viel Zeit und Mühe kostet mich das?“</p></div></div><div class="it it-ZE4"><div class="c">ZE4</div><div><h3>Orientierung und Verständlichkeit</h3><p>„Verstehe ich, was ich habe und was mir zusteht?“</p></div></div></div><div><div class="it it-ZE5"><div class="c">ZE5</div><div><h3>Individualität und Relevanz</h3><p>„Versteht mein Versicherer, was ich gerade brauche?“</p></div></div><div class="it it-ZE6"><div class="c">ZE6</div><div><h3>Prävention</h3><p>„Hilft mir mein Versicherer, dass gar nicht erst etwas passiert?“</p></div></div><div class="it it-ZE7"><div class="c">ZE7</div><div><h3>Fairness und Vertrauen</h3><p>„Werde ich fair behandelt – auch wenn eine KI entscheidet?“</p></div></div></div></div></div>
+    <div class="lv step" style="--lc:#9D167A"><div class="lh"><b>Zusatznutzen · Geltungsnutzen</b><span>die Wirkung auf andere</span></div><div class="it it-GE1"><div class="c">GE1</div><div><h3>Anerkennung und Selbstbild</h3><p>„Was sagt mein Versicherungsschutz über mich?“</p></div></div></div>
+  </div>
+  <div class="source">Eigene, heuristische Ableitung nach Vershofen (Nürnberger Nutzenschema); Meffert/Burmann/Kirchgeorg/Eisenbeiß (2024): Marketing, 14. Aufl.; Farny (2011): Versicherungsbetriebslehre; Sheth/Newman/Gross (1991)</div>
+  <aside class="notes"><p><b>7:00–9:00.</b> Schritt zwei: Was hat der Kunde von seiner Versicherung? Die Nutzenlehre nach Vershofen unterscheidet den <b>Grundnutzen</b> – die eigentliche Leistung – vom <b>Zusatznutzen</b>. Der teilt sich in den <b>Erbauungsnutzen</b>, der beim Kunden selbst entsteht, und den <b>Geltungsnutzen</b>, der aus der Wirkung auf andere entsteht. Meffert et al. fassen das als Nettonutzen: Leistung minus Prämie, minus Zeit, Mühe und Unsicherheit.</p><p>Die Besonderheit der Versicherung (Farny): ein bedingtes Zahlungsversprechen. Den Grundnutzen erlebt der Kunde erst im Schadenfall, die übrige Zeit vor allem Zusatznutzen – allen voran das Gefühl der Sicherheit.</p><p>Daraus elf Nutzenkomponenten. Die Codes – GN, ZE, GE – brauchen wir gleich.</p></aside>
+</section>
+
+<section class="slide" data-chapter="2" data-title="Radar aufgelöst: Use Cases und Kundennutzen">
+  <div class="kicker">Schritt 3 · Beides verbinden</div>
+  <h2>Welche KI-Ansätze zahlen auf welchen <em>Kundennutzen</em> ein?</h2>
+  <div class="rl" data-add="list"><img class="bg" src="assets/img/radar-vollkreis.svg?v=6" alt="" style="left:40px;top:205px;width:1000px;height:774.1935483870967px"><div class="ls tk" style="left:580px;top:280px">1</div><div class="ls tk" style="left:655px;top:280px;color:#C00009">2,5</div><div class="ls tk" style="left:780px;top:280px">5</div><div class="ls sech" style="left:128px;top:290px">Dimension im KI-Radar</div><div class="ls sech" style="left:580px;top:254px">Reife 2026</div><div class="ls thr" style="left:655px;top:304px;height:603px"></div><div class="ls" style="left:100px;top:321px;width:3px;height:138px;background:#E24300"></div><div class="ls" style="left:100px;top:472px;width:3px;height:66px;background:#A00008"></div><div class="ls" style="left:100px;top:551px;width:3px;height:66px;background:#9D167A"></div><div class="ls" style="left:100px;top:630px;width:3px;height:66px;background:#E0607E"></div><div class="ls" style="left:100px;top:709px;width:3px;height:90px;background:#005294"></div><div class="ls" style="left:100px;top:812px;width:3px;height:90px;background:#4D4D4D"></div><div class="d" style="--i:0;--rx:577.2px;--ry:495.8px;--lx:605px;--ly:330px;--sc:#E24300"></div><div class="no" style="--i:0;--rx:577.2px;--ry:495.8px;--lx:146px;--ly:330px">1</div><div class="ls nm" style="left:176px;top:330px">KI-Marktforschung</div><div class="ls vl" style="left:802px;top:330px">1,5</div><div class="ls rw" style="top:342px"></div><div class="d" style="--i:1;--rx:621.9px;--ry:469.9px;--lx:645px;--ly:354px;--sc:#E24300"></div><div class="no" style="--i:1;--rx:621.9px;--ry:469.9px;--lx:146px;--ly:354px">2</div><div class="ls nm" style="left:176px;top:354px">Next Best Offer &amp; Storno</div><div class="ls vl" style="left:802px;top:354px">2,3</div><div class="ls rw" style="top:366px"></div><div class="d" style="--i:2;--rx:622.9px;--ry:513.6px;--lx:615px;--ly:378px;--sc:#E24300"></div><div class="no" style="--i:2;--rx:622.9px;--ry:513.6px;--lx:146px;--ly:378px">3</div><div class="ls nm" style="left:176px;top:378px">Personalisierte Anschreiben</div><div class="ls vl" style="left:802px;top:378px">1,7</div><div class="ls rw" style="top:390px"></div><div class="d" style="--i:3;--rx:642.9px;--ry:530.9px;--lx:620px;--ly:402px;--sc:#E24300"></div><div class="no" style="--i:3;--rx:642.9px;--ry:530.9px;--lx:146px;--ly:402px">4</div><div class="ls nm" style="left:176px;top:402px">KI-Bilder &amp; -Videos</div><div class="ls vl" style="left:802px;top:402px">1,8</div><div class="ls rw" style="top:414px"></div><div class="d" style="--i:4;--rx:674.7px;--ry:548.2px;--lx:640px;--ly:426px;--sc:#E24300"></div><div class="no" style="--i:4;--rx:674.7px;--ry:548.2px;--lx:146px;--ly:426px">5</div><div class="ls nm" style="left:176px;top:426px">Kampagnen &amp; KI-Sichtbarkeit</div><div class="ls vl" style="left:802px;top:426px">2,2</div><div class="ls rw" style="top:438px"></div><div class="d" style="--i:5;--rx:670.1px;--ry:579.9px;--lx:630px;--ly:450px;--sc:#E24300"></div><div class="no" style="--i:5;--rx:670.1px;--ry:579.9px;--lx:146px;--ly:450px">6</div><div class="ls nm" style="left:176px;top:450px">Vertriebs-Copilot</div><div class="ls vl" style="left:802px;top:450px">2,0</div><div class="ls rw" style="top:462px"></div><div class="d" style="--i:6;--rx:701.0px;--ry:620.9px;--lx:660px;--ly:481px;--sc:#A00008"></div><div class="no" style="--i:6;--rx:701.0px;--ry:620.9px;--lx:146px;--ly:481px">7</div><div class="ls nm" style="left:176px;top:481px">ML-Tarifierung</div><div class="ls vl" style="left:802px;top:481px">2,6</div><div class="ls rw" style="top:493px"></div><div class="d" style="--i:7;--rx:653.3px;--ry:645.3px;--lx:625px;--ly:505px;--sc:#A00008"></div><div class="no" style="--i:7;--rx:653.3px;--ry:645.3px;--lx:146px;--ly:505px">8</div><div class="ls nm" style="left:176px;top:505px">Pricing-Optimierung</div><div class="ls vl" style="left:802px;top:505px">1,9</div><div class="ls rw" style="top:517px"></div><div class="d" style="--i:8;--rx:627.2px;--ry:665.8px;--lx:615px;--ly:529px;--sc:#A00008"></div><div class="no" style="--i:8;--rx:627.2px;--ry:665.8px;--lx:146px;--ly:529px">9</div><div class="ls nm" style="left:176px;top:529px">Bedingungen &amp; Produktdaten</div><div class="ls vl" style="left:802px;top:529px">1,7</div><div class="ls rw" style="top:541px"></div><div class="d" style="--i:9;--rx:620.5px;--ry:715.2px;--lx:645px;--ly:560px;--sc:#9D167A"></div><div class="no" style="--i:9;--rx:620.5px;--ry:715.2px;--lx:146px;--ly:560px">10</div><div class="ls nm" style="left:176px;top:560px">Antragsextraktion</div><div class="ls vl" style="left:802px;top:560px">2,3</div><div class="ls rw" style="top:572px"></div><div class="d" style="--i:10;--rx:579.0px;--ry:711.0px;--lx:625px;--ly:584px;--sc:#9D167A"></div><div class="no" style="--i:10;--rx:579.0px;--ry:711.0px;--lx:146px;--ly:584px">11</div><div class="ls nm" style="left:176px;top:584px">Underwriting-Assistenz</div><div class="ls vl" style="left:802px;top:584px">1,9</div><div class="ls rw" style="top:596px"></div><div class="d" style="--i:11;--rx:546.8px;--ry:717.1px;--lx:625px;--ly:608px;--sc:#9D167A"></div><div class="no" style="--i:11;--rx:546.8px;--ry:717.1px;--lx:146px;--ly:608px">12</div><div class="ls nm" style="left:176px;top:608px">Automatisierte Annahme</div><div class="ls vl" style="left:802px;top:608px">1,9</div><div class="ls rw" style="top:620px"></div><div class="d" style="--i:12;--rx:498.0px;--ry:767.1px;--lx:675px;--ly:639px;--sc:#E0607E"></div><div class="no" style="--i:12;--rx:498.0px;--ry:767.1px;--lx:146px;--ly:639px">13</div><div class="ls nm" style="left:176px;top:639px">Input-Management</div><div class="ls vl" style="left:802px;top:639px">2,9</div><div class="ls rw" style="top:651px"></div><div class="d" style="--i:13;--rx:461.9px;--ry:735.8px;--lx:660px;--ly:663px;--sc:#E0607E"></div><div class="no" style="--i:13;--rx:461.9px;--ry:735.8px;--lx:146px;--ly:663px">14</div><div class="ls nm" style="left:176px;top:663px">Chat- &amp; Voicebots</div><div class="ls vl" style="left:802px;top:663px">2,6</div><div class="ls rw" style="top:675px"></div><div class="d" style="--i:14;--rx:419.7px;--ry:718.6px;--lx:670px;--ly:687px;--sc:#E0607E"></div><div class="no" style="--i:14;--rx:419.7px;--ry:718.6px;--lx:146px;--ly:687px">15</div><div class="ls nm" style="left:176px;top:687px">Service-Copilot</div><div class="ls vl" style="left:802px;top:687px">2,8</div><div class="ls rw" style="top:699px"></div><div class="d" style="--i:15;--rx:394.2px;--ry:677.6px;--lx:665px;--ly:718px;--sc:#005294"></div><div class="no" style="--i:15;--rx:394.2px;--ry:677.6px;--lx:146px;--ly:718px">16</div><div class="ls nm" style="left:176px;top:718px">Schadenaufnahme &amp; Triage</div><div class="ls vl" style="left:802px;top:718px">2,7</div><div class="ls rw" style="top:730px"></div><div class="d" style="--i:16;--rx:388.5px;--ry:637.1px;--lx:655px;--ly:742px;--sc:#005294"></div><div class="no" style="--i:16;--rx:388.5px;--ry:637.1px;--lx:146px;--ly:742px">17</div><div class="ls nm" style="left:176px;top:742px">Dunkelverarbeitung</div><div class="ls vl" style="left:802px;top:742px">2,5</div><div class="ls rw" style="top:754px"></div><div class="d" style="--i:17;--rx:371.1px;--ry:599.9px;--lx:665px;--ly:766px;--sc:#005294"></div><div class="no" style="--i:17;--rx:371.1px;--ry:599.9px;--lx:146px;--ly:766px">18</div><div class="ls nm" style="left:176px;top:766px">Betrug &amp; Regress</div><div class="ls vl" style="left:802px;top:766px">2,7</div><div class="ls rw" style="top:778px"></div><div class="d" style="--i:18;--rx:422.6px;--ry:568.8px;--lx:620px;--ly:790px;--sc:#005294"></div><div class="no" style="--i:18;--rx:422.6px;--ry:568.8px;--lx:146px;--ly:790px">19</div><div class="ls nm" style="left:176px;top:790px">Prävention &amp; Assistance</div><div class="ls vl" style="left:802px;top:790px">1,8</div><div class="ls rw" style="top:802px"></div><div class="d" style="--i:19;--rx:369.4px;--ry:506.4px;--lx:685px;--ly:821px;--sc:#4D4D4D"></div><div class="no" style="--i:19;--rx:369.4px;--ry:506.4px;--lx:146px;--ly:821px">20</div><div class="ls nm" style="left:176px;top:821px">Enterprise-GenAI</div><div class="ls vl" style="left:802px;top:821px">3,1</div><div class="ls rw" style="top:833px"></div><div class="d" style="--i:20;--rx:411.5px;--ry:482.2px;--lx:665px;--ly:845px;--sc:#4D4D4D"></div><div class="no" style="--i:20;--rx:411.5px;--ry:482.2px;--lx:146px;--ly:845px">21</div><div class="ls nm" style="left:176px;top:845px">KI-Governance</div><div class="ls vl" style="left:802px;top:845px">2,7</div><div class="ls rw" style="top:857px"></div><div class="d" style="--i:21;--rx:454.4px;--ry:472.5px;--lx:645px;--ly:869px;--sc:#4D4D4D"></div><div class="no" style="--i:21;--rx:454.4px;--ry:472.5px;--lx:146px;--ly:869px">22</div><div class="ls nm" style="left:176px;top:869px">IT &amp; Softwareentwicklung</div><div class="ls vl" style="left:802px;top:869px">2,3</div><div class="ls rw" style="top:881px"></div><div class="d" style="--i:22;--rx:493.7px;--ry:475.8px;--lx:625px;--ly:893px;--sc:#4D4D4D"></div><div class="no" style="--i:22;--rx:493.7px;--ry:475.8px;--lx:146px;--ly:893px">23</div><div class="ls nm" style="left:176px;top:893px">Finanzen, Risiko &amp; Kapitalanlage</div><div class="ls vl" style="left:802px;top:893px">1,9</div><div class="ls rw" style="top:905px"></div>
+    <div class="rlc" data-add="cols"><div class="cx gh" style="--j:0;left:906px;width:231.27272727272728px;top:232px">Grundnutzen</div><div class="cx gh" style="--j:0;left:1149.2727272727273px;width:555.6363636363636px;top:232px">Erbauungsnutzen</div><div class="cx gh" style="--j:0;left:1716.909090909091px;width:69.0909090909091px;top:232px">Geltung</div><div class="cx ch" style="--j:0;left:940.5454545454545px;top:266px;width:77.0909090909091px"><b>GN1</b><span>Leistung</span></div><div class="cx m p" style="--j:0;left:940.5454545454545px;top:718px"></div><div class="cx m p" style="--j:0;left:940.5454545454545px;top:742px"></div><div class="cx sm" style="--j:0;left:940.5454545454545px;top:933px">2</div><div class="cx ch" style="--j:1;left:1021.6363636363636px;top:266px;width:77.0909090909091px"><b>GN2</b><span>Existenz&shy;sicherung</span></div><div class="cx m s" style="--j:1;left:1021.6363636363636px;top:354px"></div><div class="cx m p" style="--j:1;left:1021.6363636363636px;top:450px"></div><div class="cx m p" style="--j:1;left:1021.6363636363636px;top:481px"></div><div class="cx m s" style="--j:1;left:1021.6363636363636px;top:893px"></div><div class="cx sm" style="--j:1;left:1021.6363636363636px;top:933px">2</div><div class="cx ch" style="--j:2;left:1102.7272727272727px;top:266px;width:77.0909090909091px"><b>GN3</b><span>Preis-Leistung</span></div><div class="cx m p" style="--j:2;left:1102.7272727272727px;top:481px"></div><div class="cx m p" style="--j:2;left:1102.7272727272727px;top:505px"></div><div class="cx m p" style="--j:2;left:1102.7272727272727px;top:766px"></div><div class="cx m s" style="--j:2;left:1102.7272727272727px;top:893px"></div><div class="cx sm" style="--j:2;left:1102.7272727272727px;top:933px">3</div><div class="cx ch" style="--j:3;left:1183.8181818181818px;top:266px;width:77.0909090909091px"><b>ZE1</b><span>Sicherheits&shy;gefühl</span></div><div class="cx m s" style="--j:3;left:1183.8181818181818px;top:378px"></div><div class="cx m s" style="--j:3;left:1183.8181818181818px;top:450px"></div><div class="cx m p" style="--j:3;left:1183.8181818181818px;top:687px"></div><div class="cx m s" style="--j:3;left:1183.8181818181818px;top:845px"></div><div class="cx sm" style="--j:3;left:1183.8181818181818px;top:933px">1</div><div class="cx ch" style="--j:4;left:1264.909090909091px;top:266px;width:77.0909090909091px"><b>ZE2</b><span>Schnelle Hilfe</span></div><div class="cx m p" style="--j:4;left:1264.909090909091px;top:663px"></div><div class="cx m p" style="--j:4;left:1264.909090909091px;top:718px"></div><div class="cx m p" style="--j:4;left:1264.909090909091px;top:790px"></div><div class="cx sm" style="--j:4;left:1264.909090909091px;top:933px">3</div><div class="cx ch" style="--j:5;left:1346px;top:266px;width:77.0909090909091px"><b>ZE3</b><span>Zeit &amp; Bequem&shy;lichkeit</span></div><div class="cx m p" style="--j:5;left:1346px;top:560px"></div><div class="cx m p" style="--j:5;left:1346px;top:584px"></div><div class="cx m p" style="--j:5;left:1346px;top:608px"></div><div class="cx m p" style="--j:5;left:1346px;top:639px"></div><div class="cx m p" style="--j:5;left:1346px;top:663px"></div><div class="cx m s" style="--j:5;left:1346px;top:687px"></div><div class="cx m s" style="--j:5;left:1346px;top:718px"></div><div class="cx m p" style="--j:5;left:1346px;top:742px"></div><div class="cx m s" style="--j:5;left:1346px;top:821px"></div><div class="cx m s" style="--j:5;left:1346px;top:869px"></div><div class="cx sm" style="--j:5;left:1346px;top:933px">6</div><div class="cx ch" style="--j:6;left:1427.090909090909px;top:266px;width:77.0909090909091px"><b>ZE4</b><span>Verständ&shy;lichkeit</span></div><div class="cx m p" style="--j:6;left:1427.090909090909px;top:378px"></div><div class="cx m s" style="--j:6;left:1427.090909090909px;top:402px"></div><div class="cx m p" style="--j:6;left:1427.090909090909px;top:426px"></div><div class="cx m p" style="--j:6;left:1427.090909090909px;top:450px"></div><div class="cx m p" style="--j:6;left:1427.090909090909px;top:529px"></div><div class="cx m s" style="--j:6;left:1427.090909090909px;top:663px"></div><div class="cx m p" style="--j:6;left:1427.090909090909px;top:687px"></div><div class="cx sm" style="--j:6;left:1427.090909090909px;top:933px">5</div><div class="cx ch" style="--j:7;left:1508.1818181818182px;top:266px;width:77.0909090909091px"><b>ZE5</b><span>Individua&shy;lität</span></div><div class="cx m p" style="--j:7;left:1508.1818181818182px;top:330px"></div><div class="cx m p" style="--j:7;left:1508.1818181818182px;top:354px"></div><div class="cx m p" style="--j:7;left:1508.1818181818182px;top:378px"></div><div class="cx sm" style="--j:7;left:1508.1818181818182px;top:933px">3</div><div class="cx ch" style="--j:8;left:1589.2727272727273px;top:266px;width:77.0909090909091px"><b>ZE6</b><span>Prävention</span></div><div class="cx m s" style="--j:8;left:1589.2727272727273px;top:481px"></div><div class="cx m p" style="--j:8;left:1589.2727272727273px;top:790px"></div><div class="cx sm" style="--j:8;left:1589.2727272727273px;top:933px">1</div><div class="cx ch" style="--j:9;left:1670.3636363636365px;top:266px;width:77.0909090909091px"><b>ZE7</b><span>Fairness</span></div><div class="cx m s" style="--j:9;left:1670.3636363636365px;top:529px"></div><div class="cx m s" style="--j:9;left:1670.3636363636365px;top:584px"></div><div class="cx m s" style="--j:9;left:1670.3636363636365px;top:687px"></div><div class="cx m s" style="--j:9;left:1670.3636363636365px;top:742px"></div><div class="cx m s" style="--j:9;left:1670.3636363636365px;top:766px"></div><div class="cx m p" style="--j:9;left:1670.3636363636365px;top:845px"></div><div class="cx sm" style="--j:9;left:1670.3636363636365px;top:933px">1</div><div class="cx ch" style="--j:10;left:1751.4545454545455px;top:266px;width:77.0909090909091px"><b>GE1</b><span>Geltung</span></div><div class="cx m p" style="--j:10;left:1751.4545454545455px;top:402px"></div><div class="cx m p" style="--j:10;left:1751.4545454545455px;top:426px"></div><div class="cx sm" style="--j:10;left:1751.4545454545455px;top:933px">2</div><div class="cx sml" style="--j:0;left:680px;top:933px;width:200px;text-align:right">Dimensionen mit ●</div><div class="cx" style="--j:0;left:892px;top:310px;width:900px;height:639px;border-left:1px solid var(--line)"></div></div>
+    <div class="zhl" data-add="on" style="left:1307.4545454545455px;top:260px;width:77.0909090909091px;height:695px"></div>
+  </div>
+  <div class="source" style="bottom:96px">● wirkt unmittelbar · ○ unterstützt. Eigene, indikative Zuordnung der 23 Radar-Dimensionen zu den elf Nutzenkomponenten.</div>
+  <aside class="notes"><p><b>9:00–11:30.</b> Schritt drei: Jetzt legen wir beides zusammen. <b>Klick:</b> Ich löse das Radar in eine Liste auf – dieselben 23 Punkte, jetzt untereinander, der Reifegrad als Position auf der Skala.</p><p><b>Klick:</b> Rechts die elf Nutzenkomponenten. Ein voller Punkt heißt: Die Dimension verbessert diesen Nutzen unmittelbar. Ein Ring: Sie unterstützt.</p><p><b>Klick:</b> Was sofort auffällt: Die Spalte ZE3, Zeit und Bequemlichkeit, ist die vollste – 6 Dimensionen. Danach ZE4, Verständlichkeit, mit 5. Und ganz rechts, Geltung: nur Marketing.</p></aside>
+</section>
+
+<section class="slide brille" data-chapter="3" data-nochrome data-title="Die Kundenbrille">
+  <img class="kb-img" src="assets/img/kundenbrille.jpg" alt="Lächelnder Mann rückt seine Brille zurecht">
+  <div class="kb">
+    <div class="kicker">Erkenntnisse</div>
+    <h2>Ziehen wir uns die <em>Kundenbrille</em> an</h2>
+    <p class="kb-l">KI-Use-Cases erzeugen Nutzen durch</p>
+    <div class="kb-r"><span class="pp">++</span><span class="tt">Zeit und Bequemlichkeit<small>6 Dimensionen des KI-Radars wirken unmittelbar</small></span></div><div class="kb-r step"><span class="pp">+</span><span class="tt">Verständlichkeit<small>5 Dimensionen des KI-Radars wirken unmittelbar</small></span></div><div class="kb-r step"><span class="pp">+</span><span class="tt">Preis/Leistung<small>3 Dimensionen des KI-Radars wirken unmittelbar</small></span></div><div class="kb-r step"><span class="pp">+</span><span class="tt">Individualität<small>3 Dimensionen des KI-Radars wirken unmittelbar</small></span></div>
+  </div>
+  <aside class="notes"><p><b>11:00–12:00.</b> Was heißt das jetzt? Ziehen wir uns die Kundenbrille an: Was hat der Kunde von all den KI-Use-Cases?</p><p>Am stärksten – doppeltes Plus – <b>Zeit und Bequemlichkeit</b>: 6 Dimensionen zahlen unmittelbar darauf ein. Dann <b>Verständlichkeit</b> mit 5, <b>Preis/Leistung</b> über Tarifierung, Pricing und Betrugsabwehr mit 3 und <b>Individualität</b> mit 3. Zwei davon schauen wir uns genauer an: Zeit, weil es am häufigsten ist – und Individualität, weil dort das größte Potenzial liegt.</p></aside>
+</section>
+
+<section class="slide" data-chapter="3" data-title="Zeit und Bequemlichkeit">
+  <div class="kicker">Erkenntnis 1 · der häufigste Nutzen</div>
+  <h2>Zeit und Bequemlichkeit als häufiger <em>Nutzen</em> für Kunden</h2>
+  <div class="tiles">
+    <div class="tile"><div class="tn">1</div><h3>Use Cases im KI-Radar</h3>
+      <div class="ucr"><span class="rn" style="background:#E0607E">13</span><span class="t">Input-Management</span><span class="v">2,9</span></div><div class="ucr"><span class="rn" style="background:#E0607E">14</span><span class="t">Chat- &amp; Voicebots</span><span class="v">2,6</span></div><div class="ucr"><span class="rn" style="background:#005294">17</span><span class="t">Dunkelverarbeitung</span><span class="v">2,5</span></div><div class="ucr"><span class="rn" style="background:#9D167A">10</span><span class="t">Antragsextraktion</span><span class="v">2,3</span></div><div class="ucr"><span class="rn" style="background:#9D167A">11</span><span class="t">Underwriting-Assistenz</span><span class="v">1,9</span></div><div class="ucr"><span class="rn" style="background:#9D167A">12</span><span class="t">Automatisierte Annahme</span><span class="v">1,9</span></div>
+      <p class="tf">Reife 2026 auf der Skala 1–5 · Schwelle zum Regelbetrieb 2,5</p></div>
+    <div class="tile step"><div class="tn">2</div><h3>Highlight-Case NICE Cognigy</h3>
+      <div class="cflow"><div class="cfs"><b>Anruf</b><span>Kunde ruft an, der KI-Agent nimmt das Anliegen auf</span></div><div class="cfa"></div><div class="cfs"><b>SMS</b><span>Agent schickt einen Link aufs Handy</span></div><div class="cfa"></div><div class="cfs"><b>Formular</b><span>Kunde ergänzt Daten und Fotos digital</span></div><div class="cfa"></div><div class="cfs"><b>Anruf</b><span>Gespräch geht mit den Daten direkt weiter</span></div></div></div>
+    <div class="tile step"><div class="tn">3</div><h3>Nutzen hoch, Beschwerden runter</h3>
+      <div class="ud"><div class="up"><i>↑</i><span><b>Zeit &amp; Bequemlichkeit</b>ZE3</span></div><div class="up"><i>↑</i><span><b>Schnelle Hilfe</b>ZE2</span></div><div class="dn"><i>↓</i><span><b>Lange Bearbeitung</b>B1</span></div><div class="dn"><i>↓</i><span><b>Erreichbarkeit</b>B2</span></div></div>
+      <div class="kpi"><div><b>95 %</b><span>der Anrufe löst der Agent selbst</span></div><div><b>−25 %</b><span>Gesprächsdauer mit Menschen</span></div><div><b>+20 %</b><span>Kundenzufriedenheit</span></div></div></div>
+  </div>
+  <div class="source">Quellen: KI-Radar v0.5 (Orbach, ivwKöln, 11/2026); Glock (NICE Cognigy), Koch (BearingPoint): Die neue Ära KI-gestützter Kundeninteraktion, Versicherungs.Dialog 2026 – Kennzahlen sind Anbieterangaben aus Kundenprojekten.</div>
+  <aside class="notes"><p><b>12:00–14:00.</b> Zeit und Bequemlichkeit ist der häufigste Nutzen. <b>Links</b> die 6 Use Cases aus dem Radar – vom Input-Management (Reife 2,9) bis zur automatisierten Annahme.</p><p><b>Klick – Mitte, der Highlight-Case von NICE Cognigy:</b> Der Kunde ruft an. Statt ihn alles am Telefon diktieren zu lassen, schickt der KI-Agent eine SMS mit einem Link. Der Kunde füllt das Formular auf dem Handy aus – und das Gespräch geht mit den Daten direkt weiter. Kein Warten, keine Rückfragen, kein Medienbruch.</p><p><b>Klick – rechts die Wirkung:</b> Nutzen hoch – Zeit, schnelle Hilfe. Beschwerden runter – lange Bearbeitung und schlechte Erreichbarkeit, die beiden häufigsten Gründe. Laut Anbieter löst der Agent 95 % der Anrufe selbst, Gespräche mit Menschen werden 25 % kürzer, die Zufriedenheit steigt um 20 %.</p></aside>
+</section>
+
+<section class="slide" data-chapter="3" data-title="Individualisierung und Hyperpersonalisierung">
+  <div class="kicker">Erkenntnis 2 · das größte Potenzial</div>
+  <h2>Individualisierung und Hyperpersonalisierung: hohes <em>Potenzial</em>, bislang wenig bekannte Use Cases</h2>
+  <div class="tiles ind">
+    <div class="tile"><div class="tn">1</div><h3>KI-Marktforschung</h3><p class="tq">Bedürfnisse verstehen, bevor das Produkt entsteht</p>
+      <div class="rf"><span class="num-l">1,5</span><span>Reife 2026 im KI-Radar (1–5) – unter der Schwelle 2,5</span></div>
+      <p class="ex"><b>ERGO</b> testet synthetische Panels: KI-Personas auf Basis echter Kundendaten. Offene Antworten wertet die KI in Sekunden aus.</p></div>
+    <div class="tile step"><div class="tn">2</div><h3>KI-Personalisierung von Anschreiben</h3><p class="tq">Jeder Kunde bekommt seinen Brief</p>
+      <div class="rf"><span class="num-l">1,7</span><span>Reife 2026 im KI-Radar (1–5) – unter der Schwelle 2,5</span></div>
+      <p class="ex"><b>Wertgarantie</b>: KI entwirft Antworten auf Kundenfeedback, Mitarbeitende geben frei. <b>60 %</b> der Kunden finden Hinweise auf Versorgungslücken aus ihren Daten gut.</p></div>
+    <div class="tile step"><div class="tn">3</div><h3>Next Best Offer und Next Best Action</h3><p class="tq">Das passende Angebot im richtigen Moment</p>
+      <div class="rf"><span class="num-l">2,3</span><span>Reife 2026 im KI-Radar (1–5) – unter der Schwelle 2,5</span></div>
+      <p class="ex"><b>DA Direkt</b>: Voice-Agent „Dana“ macht bei Kündigungsabsicht in Echtzeit ein Alternativangebot – über 70 % der Fälle ohne Menschen.</p></div>
+  </div>
+  <div class="source">Quellen: KI-Radar v0.5; ERGO (Versicherungsforen Leipzig, 23.09.2025); IT Finanzmagazin (07.09.2026); Sirius Campus, Kundenmonitor Assekuranz 2026; InsurLab Germany (2026): Scaling AI, Beitrag DA Direkt.</div>
+  <aside class="notes"><p><b>14:00–16:00.</b> Das Gegenstück: Individualität. Hohes Potenzial – aber kaum jemand kennt die Use Cases. Die Reife liegt überall unter der Schwelle von 2,5.</p><p><b>Erstens KI-Marktforschung</b> (Reife 1,5): ERGO testet synthetische Panels – KI-Personas auf Basis echter Kundendaten – und wertet offene Antworten in Sekunden aus.</p><p><b>Zweitens personalisierte Anschreiben</b> (1,7): Wertgarantie lässt die KI Antworten auf Kundenfeedback entwerfen, Mitarbeitende geben frei. Und die Kunden wollen es: 60 % finden es gut, wenn der Versicherer ihre Daten für Hinweise auf Versorgungslücken nutzt, 48 % begrüßen Angebote passend zur Lebenslage (Sirius Campus).</p><p><b>Drittens Next Best Offer und Next Best Action</b> (2,3): DA Direkt – der Voice-Agent „Dana“ macht bei Kündigungsabsicht in Echtzeit ein Alternativangebot und schließt über 70 % der Fälle ohne Menschen ab.</p></aside>
+</section>
+
+<section class="slide" data-chapter="3" data-title="Was benötigt man zur Umsetzung?">
+  <div class="kicker">Umsetzung</div>
+  <h2>Was benötigt man zur <em>Umsetzung</em>?</h2>
+  <div class="um">
+    <div><div class="uh"><span>1</span>Technisches Fundament</div>
+      <div class="ly"><b>Cloud</b><span>Daten in Sekunden statt im Nachtlauf, Rechenleistung skaliert mit</span></div><div class="ly"><b>CRM</b><span>Vollständige Kundensicht: Verträge, Schäden, Kontakte, Einwilligungen</span></div><div class="ly"><b>Daten</b><span>Sauber, zugänglich und mit Einwilligung nutzbar</span></div></div>
+    <div class="step"><div class="uh"><span>2</span>Mitarbeiter und Teams, die vernetzt denken</div>
+      <div class="venn"><svg viewBox="0 0 700 600" font-family="-apple-system,Helvetica,Arial,sans-serif"><circle cx="230" cy="200" r="170" fill="#C00009" fill-opacity=".09" stroke="#C00009" stroke-width="2.5"/><circle cx="470" cy="200" r="170" fill="#E24300" fill-opacity=".09" stroke="#E24300" stroke-width="2.5"/><circle cx="350" cy="400" r="170" fill="#9D167A" fill-opacity=".09" stroke="#9D167A" stroke-width="2.5"/><text x="170" y="165" text-anchor="middle" font-size="23" font-weight="600" fill="#1d1d1f">Versicherungs-</text><text x="170" y="193" text-anchor="middle" font-size="23" font-weight="600" fill="#1d1d1f">vorgänge</text><text x="170" y="221" text-anchor="middle" font-size="18" fill="#C00009" font-weight="600">Fachkenntnis</text><text x="530" y="165" text-anchor="middle" font-size="23" font-weight="600" fill="#1d1d1f">Kunde, Vertrieb,</text><text x="530" y="193" text-anchor="middle" font-size="23" font-weight="600" fill="#1d1d1f">Sparte</text><text x="530" y="221" text-anchor="middle" font-size="18" fill="#E24300" font-weight="600">Auswirkungen kennen</text><text x="350" y="495" text-anchor="middle" font-size="23" font-weight="600" fill="#1d1d1f">KI-</text><text x="350" y="523" text-anchor="middle" font-size="23" font-weight="600" fill="#1d1d1f">Möglichkeiten</text><text x="350" y="551" text-anchor="middle" font-size="18" fill="#9D167A" font-weight="600">Know-how</text><text x="350" y="282" text-anchor="middle" font-size="20" font-weight="700" fill="#1d1d1f" stroke="#fff" stroke-width="6" stroke-linejoin="round" paint-order="stroke">vernetzt</text><text x="350" y="306" text-anchor="middle" font-size="20" font-weight="700" fill="#1d1d1f" stroke="#fff" stroke-width="6" stroke-linejoin="round" paint-order="stroke">denken</text></svg></div></div>
+  </div>
+  <aside class="notes"><p><b>16:00–17:30.</b> Was braucht man, um das umzusetzen? Zwei Schwerpunkte.</p><p><b>Erstens das technische Fundament:</b> Cloud, damit Daten in Sekunden statt im Nachtlauf verarbeitet werden. Ein CRM mit der vollständigen Sicht auf den Kunden – Verträge, Schäden, Kontakte, Einwilligungen. Und Daten, die sauber, zugänglich und mit Einwilligung nutzbar sind. Ohne das bleibt Personalisierung ein Serienbrief.</p><p><b>Klick – zweitens Menschen:</b> Mitarbeiterinnen, Mitarbeiter und Teams, die vernetzt denken. Sie kennen die Versicherungsvorgänge, sie verstehen, was eine Änderung für Kunde, Vertrieb und Sparte bedeutet – und sie wissen, was KI heute kann. Diese Schnittmenge ist selten, und genau sie entscheidet.</p></aside>
+</section>
+
+<section class="slide" data-chapter="3" data-title="Fazit: Vom WOW-Effekt zum Standard">
+  <div class="kicker">Fazit</div>
+  <h2>Vom WOW-Effekt zum <em>Standard</em></h2>
+  <div class="tl3">
+    <div class="ln"></div>
+    <div class="p"><div class="y">heute</div><h3>Vorreiter</h3><p>Einzelne Versicherer setzen KI-Use-Cases produktiv ein – Wettbewerbsvorteil für wenige.</p></div>
+    <div class="p"><div class="y">bis 2028</div><h3>Begeisterung</h3><p>Zeit sparen, erklären, personalisieren: Use Cases schaffen WOW-Momente aus Kundensicht.</p></div>
+    <div class="p"><div class="y">2030</div><h3>Standard</h3><p>Geprägt durch Branchen mit weniger Regulatorik – Kunden erwarten es selbstverständlich.</p></div>
+  </div>
+  <div class="wink step">
+    <div class="wl">Und mit einem Augenzwinkern</div>
+    <div class="wc"><span>KI-Use-Cases</span><i>→</i><span>Kundennutzen</span><i>→</i><span>Begeisterung</span><i>→</i><span class="k">jetzt Kunden-werben-Kunden aufbauen*</span></div>
+  </div>
+  <div class="close2 step">Haben Sie ein Kunden-werben-Kunden-Programm?</div>
+  <div class="source">* Wachsende Bedeutung, da gleichzeitig ein Überangebot an Marketing-Content droht. &nbsp;·&nbsp; <b>Danke.</b> Prof. Dr. Dominik Orbach · ivwKöln · dominik.orbach@th-koeln.de</div>
+  <aside class="notes"><p><b>17:30–20:00.</b> Mein Fazit – ein vermutlicher Weg, wohl wissend, dass die Geschwindigkeit eine andere ist als bei früheren Veränderungen.</p><p>Heute setzen einzelne Vorreiter KI-Use-Cases produktiv ein. Bis etwa 2028 sind Use Cases, die Zeit sparen, erklären und personalisieren, Begeisterungsfaktoren. Bis 2030 werden sie zum Standard, geprägt durch Branchen mit weniger Regulatorik: Kunden erwarten dann selbstverständlich, was sie von Amazon, ihrer Bank oder ihrem KI-Assistenten kennen.</p><p><b>Klick – und jetzt mit einem Augenzwinkern:</b> KI-Use-Cases stiften Kundennutzen, Kundennutzen schafft Begeisterung – und begeisterte Kunden erzählen es weiter. Genau jetzt, solange es noch begeistert, ist der Zeitpunkt, Kunden-werben-Kunden aufzubauen. Zumal gleichzeitig ein Überangebot an KI-generiertem Marketing-Content droht – da zählt die Empfehlung von Freunden umso mehr.</p><p><b>Klick:</b> Also: Haben Sie ein Kunden-werben-Kunden-Programm? Danke.</p><p>Brücke ins Podium: Marcus Wollny (DOMCURA) zu Tempo im Schaden, Michael Hagedorn (Materna) zu Cloud und Integration, Moritz Delbrück (MoIn Group) zu Vertrieb und Personalisierung.</p></aside>
+</section>
+
+<!-- Footer (für alle Folien) -->
+<div id="footer">
+  <div class="meta"><b>Prof. Dr. Dominik Orbach</b> · Versicherungsmonitor Breakfast Briefing</div>
+  <div style="display:flex;align-items:flex-end">
+    <div id="progress"></div>
+  </div>
+  <div style="display:flex;align-items:flex-end">
+    <div id="slideno"></div>
+    <img id="logo" src="assets/img/th-koeln-logo.svg" alt="TH Köln – Technology Arts Sciences">
+    <img id="logo-white" src="assets/img/th-koeln-logo-white.svg" alt="TH Köln – Technology Arts Sciences">
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+<div id="controls">
+  <button data-act="prev" title="Zurück (←)"><svg><use href="#i-chevron-l"/></svg></button>
+  <button data-act="next" title="Weiter (→)"><svg><use href="#i-chevron-r"/></svg></button>
+  <button data-act="overview" title="Übersicht (O)"><svg><use href="#i-grid"/></svg></button>
+  <button data-act="presenter" title="Moderatoransicht (P)"><svg><use href="#i-monitor"/></svg></button>
+  <button data-act="full" title="Vollbild (F)"><svg><use href="#i-expand"/></svg></button>
+  <button data-act="help" title="Tastenkürzel (H)"><svg><use href="#i-help"/></svg></button>
+</div>
+<div id="overview"></div>
+<div id="blackout"></div>
+<div id="help">
+  <div><kbd>→</kbd><kbd>Leertaste</kbd>weiter</div>
+  <div><kbd>←</kbd>zurück</div>
+  <div><kbd>O</kbd>Übersicht aller Folien</div>
+  <div><kbd>P</kbd>Moderatoransicht mit Notizen &amp; Timer</div>
+  <div><kbd>F</kbd>Vollbild</div>
+  <div><kbd>B</kbd>Bildschirm schwarz</div>
+  <div><kbd>12</kbd><kbd>Enter</kbd>zu Folie 12 springen</div>
+  <div><kbd>H</kbd>Hilfe ein/aus</div>
+</div>
+
+<script>window.DECK_CHAPTERS = [{"id":1,"name":"Ausgangslage","minutes":2,"color":"#1d1d1f"},{"id":2,"name":"Drei Schritte","minutes":8,"color":"#1d1d1f"},{"id":3,"name":"Erkenntnisse","minutes":10,"color":"#C00009"}];</script>
+<script src="assets/deck.js?v=3"></script>
+</body>
+</html>

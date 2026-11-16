@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moderatoransicht</title>
+<style>
+  :root {
+    --red: #C00009; --orange: #E24300; --violet: #9D167A;
+    --bg: #111111; --panel: #1C1C1C; --line: #2C2C2C; --text: #EDEDED; --muted: #9A9A9A;
+    --font: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: var(--font); }
+  body { display: grid; grid-template-rows: auto 1fr auto; height: 100vh; }
+
+  header {
+    display: flex; align-items: center; gap: 24px; padding: 14px 22px; border-bottom: 1px solid var(--line);
+  }
+  .timer { font-size: 44px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .timer.over { color: #FF6B6B; }
+  .btn {
+    border: 0; border-radius: 10px; padding: 10px 16px; font: 700 15px var(--font);
+    background: #2A2A2A; color: #fff; cursor: pointer;
+  }
+  .btn:hover { background: var(--red); }
+  .btn.primary { background: var(--red); }
+  .spacer { flex: 1; }
+  .clock { font-size: 22px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .pos { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .chip { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: #2A2A2A; }
+
+  main { display: grid; grid-template-columns: 1.55fr 1fr; gap: 18px; padding: 18px 22px; min-height: 0; }
+  .col { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
+  .label { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 10px; overflow: hidden; }
+  .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .frame.current { outline: 3px solid var(--red); }
+  .steps { font-size: 14px; color: var(--muted); }
+  .notes {
+    flex: 1; min-height: 0; overflow-y: auto; background: var(--panel); border-radius: 12px; padding: 20px 24px;
+    font-size: 21px; line-height: 1.5;
+  }
+  .notes p { margin: 0 0 14px; }
+  .notes b { color: #fff; }
+  .notes kbd { background: #333; border-radius: 4px; padding: 1px 6px; font-size: 15px; }
+  .title { font-size: 20px; font-weight: 700; line-height: 1.3; }
+  .next-title { font-size: 16px; color: var(--muted); }
+
+  footer { padding: 12px 22px 16px; border-top: 1px solid var(--line); }
+  .budget { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .b { background: var(--panel); border-radius: 10px; padding: 10px 14px; }
+  .b.cur { outline: 2px solid var(--red); }
+  .b .n { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .b .t { font-size: 20px; font-weight: 700; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .b .t.over { color: #FF6B6B; }
+  .b .bar { height: 6px; background: #333; border-radius: 3px; overflow: hidden; margin-top: 8px; }
+  .b .bar i { display: block; height: 100%; width: 0; background: var(--red); }
+  .b .bar i.over { background: #FF6B6B; }
+
+  .warn { padding: 40px; font-size: 20px; line-height: 1.5; color: var(--muted); display: none; }
+  body.no-opener .warn { display: block; }
+</style>
+</head>
+<body>
+<header>
+  <div class="timer" id="timer">00:00</div>
+  <button class="btn primary" id="startBtn">Start</button>
+  <button class="btn" id="resetBtn">Reset</button>
+  <span class="chip" id="chip">–</span>
+  <div class="spacer"></div>
+  <button class="btn" id="prevBtn">← Zurück</button>
+  <div class="pos" id="pos">– / –</div>
+  <button class="btn" id="nextBtn">Weiter →</button>
+  <div class="spacer"></div>
+  <div class="clock" id="clock"></div>
+</header>
+
+<main>
+  <div class="col">
+    <div class="label">Aktuelle Folie <span class="steps" id="steps"></span></div>
+    <div class="frame current"><iframe id="cur" data-q="?embed&slide=0" title="Aktuelle Folie"></iframe></div>
+    <div class="title" id="title"></div>
+  </div>
+  <div class="col">
+    <div class="label">Nächste Folie</div>
+    <div class="frame" style="max-height:34vh"><iframe id="nxt" data-q="?embed&slide=1" title="Nächste Folie"></iframe></div>
+    <div class="next-title" id="nextTitle"></div>
+    <div class="label" style="margin-top:6px">Notizen</div>
+    <div class="notes" id="notes"></div>
+  </div>
+</main>
+
+<footer>
+  <div class="budget" id="budget"></div>
+</footer>
+
+<div class="warn">Noch keine Verbindung zur Präsentation. Bitte die Präsentation öffnen und dort die Taste <b>P</b> drücken – oder die Präsentation im zweiten Tab einmal weiterklicken.</div>
+
+<script>
+  // Welche Fassung gezeigt wird, bestimmt der Parameter ?deck= (Standard: index.html)
+  (function(){ const d=(new URLSearchParams(location.search).get('deck')||'index.html').replace(/[^A-Za-z0-9._-]/g,''); document.querySelectorAll('iframe[data-q]').forEach(f=>{ f.src=d+f.dataset.q; }); })();
+</script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const opener = window.opener;
+  if (!opener) document.body.classList.add('no-opener');
+
+  let state = null;
+  let running = false;
+  let elapsed = 0;
+  let perChapter = {};
+  let curIndex = -1;
+
+  const fmt = (s) => {
+    const neg = s < 0; s = Math.abs(Math.round(s));
+    const m = Math.floor(s / 60), ss = s % 60;
+    return (neg ? '−' : '') + String(m).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
+  };
+
+  let channel = null;
+  try { channel = new BroadcastChannel('deck-sync'); } catch (e) { channel = null; }
+  // Nur einen Weg nutzen, sonst würde doppelt weitergeschaltet
+  function post(msg) {
+    if (opener && !opener.closed) opener.postMessage(msg, '*');
+    else if (channel) channel.postMessage(msg);
+  }
+  function nav(action, index) { post({ type: 'presenter-nav', action, index }); }
+
+  function gotoFrame(frame, index, step) {
+    try { frame.contentWindow.postMessage({ type: 'embed-goto', index, step }, '*'); } catch (e) { /* ignore */ }
+  }
+
+  function renderBudget() {
+    if (!state) return;
+    const el = $('budget');
+    el.innerHTML = state.chapters.map((c) => {
+      const used = perChapter[c.id] || 0;
+      const plan = c.minutes * 60;
+      const over = used > plan;
+      const pct = Math.min(100, (used / plan) * 100);
+      return `<div class="b ${c.id === state.chapter ? 'cur' : ''}">
+        <div class="n">${String(c.id).padStart(2, '0')} · ${c.name}</div>
+        <div class="t ${over ? 'over' : ''}">${fmt(used)} / ${c.minutes}:00</div>
+        <div class="bar"><i class="${over ? 'over' : ''}" style="width:${pct}%"></i></div>
+      </div>`;
+    }).join('');
+    const total = state.chapters.reduce((a, c) => a + c.minutes * 60, 0);
+    $('timer').classList.toggle('over', elapsed > total);
+  }
+
+  function render() {
+    if (!state) return;
+    $('pos').textContent = `${state.index + 1} / ${state.total}`;
+    $('title').textContent = state.title;
+    $('nextTitle').textContent = 'Danach: ' + state.nextTitle;
+    $('notes').innerHTML = state.notes || '<p style="color:#777">Keine Notizen.</p>';
+    $('steps').textContent = state.steps ? `· Klick ${state.step} von ${state.steps}` : '';
+    const ch = state.chapters.find((c) => c.id === state.chapter);
+    $('chip').textContent = ch ? `${String(ch.id).padStart(2, '0')} · ${ch.name}` : '–';
+    gotoFrame($('cur'), state.index, state.step);
+    gotoFrame($('nxt'), Math.min(state.index + 1, state.total - 1), 0);
+    renderBudget();
+  }
+
+  function onState(d) {
+    if (d.type === 'deck-state') {
+      if (curIndex !== -1 && d.index !== curIndex && !running && elapsed === 0) start();
+      curIndex = d.index;
+      state = d;
+      document.body.classList.remove('no-opener');
+      render();
+    }
+  }
+  let lastKey = '';
+  function dedupe(d) {
+    const k = d.type + ':' + d.index + ':' + d.step;
+    if (k === lastKey) return;
+    lastKey = k;
+    onState(d);
+  }
+  window.addEventListener('message', (ev) => dedupe(ev.data || {}));
+  if (channel) channel.onmessage = (ev) => dedupe(ev.data || {});
+
+  function start() { running = true; $('startBtn').textContent = 'Pause'; }
+  function pause() { running = false; $('startBtn').textContent = 'Weiter'; }
+  $('startBtn').onclick = () => (running ? pause() : start());
+  $('resetBtn').onclick = () => { elapsed = 0; perChapter = {}; pause(); $('startBtn').textContent = 'Start'; $('timer').textContent = '00:00'; renderBudget(); };
+  $('prevBtn').onclick = () => nav('prev');
+  $('nextBtn').onclick = () => nav('next');
+
+  setInterval(() => {
+    $('clock').textContent = new Date().toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    if (running && state) {
+      elapsed += 1;
+      perChapter[state.chapter] = (perChapter[state.chapter] || 0) + 1;
+      $('timer').textContent = fmt(elapsed);
+      renderBudget();
+    }
+  }, 1000);
+
+  document.addEventListener('keydown', (e) => {
+    if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].includes(e.key)) { e.preventDefault(); nav('next'); }
+    if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].includes(e.key)) { e.preventDefault(); nav('prev'); }
+    if (e.key === 's' || e.key === 'S') (running ? pause() : start());
+  });
+
+  // iframes nach dem Laden synchronisieren
+  $('cur').addEventListener('load', render);
+  $('nxt').addEventListener('load', render);
+
+  post({ type: 'presenter-hello' });
+  setTimeout(() => post({ type: 'presenter-hello' }), 500);
+})();
+</script>
+</body>
+</html>
